@@ -46,9 +46,13 @@ export class SignupComponent implements OnInit {
   }
  
   setCountryCode(value){
-   console.log(value.length);
-   console.log(value.country_code);
-   console.log(value.country_code);
+    console.log(value);
+    const index = this.countries.findIndex( record => record.country_name === value );
+    console.log(this.countries[index]);
+
+  //  console.log(value.length);
+  //  console.log(value.country_code);
+  //  console.log(value.country_code);
   }
 
 

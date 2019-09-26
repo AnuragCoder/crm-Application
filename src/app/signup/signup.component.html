@@ -18,7 +18,7 @@
     <div>  <span> Address </span> <input type="text" formControlName='address'>     </div> 
     <div> <span> country </span>
          <select formControlName='country' (ngModelChange)='setCountryCode($event)'>
-             <option *ngFor="let country of countries"  value={{country}}>
+             <option *ngFor="let country of countries"  value={{country.country_name}}>
                     {{country.country_name}}
                     
              </option>        
