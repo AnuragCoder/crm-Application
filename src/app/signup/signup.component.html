@@ -1,0 +1,42 @@
+<div>
+<form [formGroup]="userSignup" (ngSubmit)="submitt()"> 
+    <div>  <span> Name </span> <input type="text" formControlName='name'>     </div>
+    <div>  <span> Username </span> <input type="text" formControlName='username'>     </div>   
+    <div>  <span> Email </span> <input type="text" formControlName='emai'>     </div>   
+    <div>  <span> Password </span> <input type="text" formControlName='password'>     </div>   
+    <div>  <span> Confirm Password </span> <input type="text">     </div>
+    <!-- <div>  <span> Country </span> <input type="text">     </div>  -->
+    <div>  <span> Job Title </span>
+    <select formControlName='jobTile'>
+            <option *ngFor="let jobsType of JobTitle" value= {{jobsType}}>
+              {{jobsType}}
+            </option>
+     </select>
+    </div>
+   
+    <div>  <span> Job Role </span> <input type="text" formControlName='jobRole'>     </div>   
+    <div>  <span> Address </span> <input type="text" formControlName='address'>     </div> 
+    <div> <span> country </span>
+         <select formControlName='country' (ngModelChange)='setCountryCode($event)'>
+             <option *ngFor="let country of countries"  value={{country}}>
+                    {{country.country_name}}
+                    
+             </option>        
+       </select>
+     </div>  
+    <div>  <span> Phone </span>
+        <select formControlName='country_iso_code'>
+            <option *ngFor="let country of countries" value={{country.id}}>
+                    {{country.id}}
+            </option>    
+        </select>    
+        <input type="text" formControlName='phone'>     
+     </div>    
+    
+     <div> <button type="submit" >Submit </button>    </div>
+    
+
+</form>    
+
+
+</div>
