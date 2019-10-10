@@ -14,7 +14,7 @@ export class SignupService {
  signup : any =  this.baseUrl+ 'signUp';
  jobTitle : any = this.baseUrl + 'jobTitle';
  countryCode : any = this.baseUrl + 'countryCode';
- userNameCheck : any = this.baseUrl + 'userNameCheck';
+ checkuserName : any = this.baseUrl + 'userNameCheck';
   
 
   constructor(public http: HttpClient) {
@@ -23,14 +23,28 @@ export class SignupService {
 
 
    job() : Observable<any>{
-    let headers = new HttpHeaders();
-    // headers.append('Content-Type', 'application/json; charset=utf-8');
-    
      return this.http.get(this.jobTitle);
    }
 
-   usernameCheck() : Observable<any>{
-     return this.http.get(this.userNameCheck);
+   usernameCheck(data) : Observable<any>{
+
+   
+
+     console.log(data);
+     let headers = new HttpHeaders();
+    //console.log(usertoken);
+    headers = headers.append('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.append('Accept' , 'application/json');
+    let httpOptions = {
+      headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              // 'Authorization': ''
+          }
+      ),
+        }
+  
+     return this.http.post(this.checkuserName , data , { headers: headers });
    }
 
    country() : Observable<any>{
@@ -39,7 +53,8 @@ export class SignupService {
    
    
 
-  SignUpUser() : Observable<any> {
-    return this.signup.post(this.signup);
+  SignUpUser(value) : Observable<any> {
+    console.log(value);
+    return this.http.post(this.signup , value)
   }
 }

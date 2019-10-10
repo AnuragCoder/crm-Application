@@ -7,12 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { OnlyNumberDirective } from './directive/only-number.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ChangePasswordComponent,
+    OnlyNumberDirective
   ],
   imports: [
     BrowserModule,
