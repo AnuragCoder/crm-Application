@@ -1,8 +1,24 @@
-<!-- <div>
- <>    
+
+<style>
+    .validBox {
+      border-color : green;
+    }
+
+    .notValidBox {
+      border-color : red;
+    }
+
+   </style>
+
+
+
+
+ <form [formGroup]="userLogin" (ngSubmit)="onSubmit()">
  <span>UserName/email</span>
- <input type="text" placeholder="Enter UserName/email">
+ <input type="text" [class.validBox]="userLogin.get('user').valid && userLogin.get('user').touched" [class.notValidBox]="userLogin.get('user').valid && userLogin.get('user').touched" formControl='user' placeholder="Enter UserName/email">
 
  <span>Password</span>
- <input type="password" placeholder="enter password here">
-</div>    -->
+ <input type="password" placeholder="enter password here" [class.validBox]="userLogin.get('password').valid && userLogin.get('password').touched" [class.notValidBox]="userLogin.get('password').valid && userLogin.get('password').touched" formControl='password'>
+ <input type="submmitt" value="submitt">
+ </form>
+

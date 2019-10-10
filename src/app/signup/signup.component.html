@@ -1,42 +1,58 @@
+
+<style>
+ .validBox {
+   border-color : green;
+ }
+
+ .notValidBox {
+   border-color : red;
+ }
+
+</style>
+
+
 <H1> Signup Page </H1>
 
 <div>
-<form [formGroup]="userSignup" (ngSubmit)="submitt()"> 
-   
-  <div>  
-    <span> Name </span> 
-    <input type="text" formControlName='name'>     
+<form [formGroup]="userSignup" (ngSubmit)="submitt()">
+
+  <div>
+    <span> Name </span>
+    <input type="text" formControlName='name' [ngClass]="[userSignup.get('name').valid?'validBox':'',(userSignup.get('name').invalid && userSignup.get('name').touched)?'notValidBox':'']">
+    <span *ngIf='userSignup.get("name").invalid &&  userSignup.get("name").touched'>Enter your name</span>
   </div>
 
 
-    <div>  
-      <span> Username </span> 
-      <input type="text" formControlName='username' (input)="checkusername($event.target.value)">
-      <span *ngIf='userNameCheck && userSignup.get("username").valid'> UserName Available </span> 
-      <span *ngIf='userSignup.get("username").touched && userSignup.get("username").invalid'> Username Should be 6 digit with no space </span>  
-    </div> 
-    
-    
-    <div> 
-       <span> Email </span> 
-      <input type="text" formControlName='email'>  
+    <div>
+      <span> Username </span>
+      <input type="text" [class.validBox]="userSignup.get('username').valid && userNameCheck" [class.notValidBox]="userSignup.get('username').invalid && userSignup.get('username').touched"   formControlName='username' (input)="checkusername($event.target.value)">
+      <span *ngIf='userNameCheck && userSignup.get("username").valid && userSignup.get("username").touched'> UserName Available </span>
+      <span *ngIf='!userNameCheck  && userSignup.get("username").touched && userSignup.get("username").valid'> Username already exist </span>
+      <span *ngIf='userSignup.get("username").touched && userSignup.get("username").invalid'> UserName Should be 6 digit with no Space </span>
+
+    </div>
+
+
+    <div>
+       <span> Email </span>
+      <input type="text" formControlName='email' [class.validBox]="userSignup.get('email').valid" [class.notValidBox]="userSignup.get('email').invalid && userSignup.get('email').touched">
            <span *ngIf='userSignup.get("email").valid && userSignup.get("email").touched'> Email is valid </span>
            <span  *ngIf='userSignup.get("email").invalid && userSignup.get("email").touched '> Email is invalid </span>
-    </div>   
+    </div>
 
     <div>
         <span> Password </span>
-        <input type="password" formControlName='password'>
+        <input type="password" (mouseout)="checkPass($event.target.value)" formControlName='password' [class.validBox]="userSignup.get('password').valid && passWorCheck" [class.notValidBox]="userSignup.get('password').invalid && userSignup.get('password').touched">
        <span *ngIf='userSignup.get("password").touched && userSignup.get("password").invalid'>Password should be minimum 6 digit</span>
-       <span *ngIf='userSignup.get("password").touched && userSignup.get("password").valid'> Password is valid  </span>
-      </div> 
-
-    <div> 
-       <span> Confirm Password </span> 
-       <input type="text" (input)="checkPass($event.target.value)"> 
-       <p *ngIf="passWorCheck" style="color:red"> Password Matched </p>     
+       <span *ngIf='userSignup.get("password").touched && userSignup.get("password").valid && !(passWorCheck)'>Your Password is valid now Please confirm it </span>
       </div>
-    
+
+    <div>
+       <span> Confirm Password </span>
+       <input type="text" formControlName="confirmPass"  (input)="checkPass($event.target.value)" [class.validBox]="userSignup.get('confirmPass').valid && passWorCheck" [class.notValidBox]="userSignup.get('confirmPass').touched && !(passWorCheck)">
+       <p *ngIf="passWorCheck" style="color:red"> Password Matched </p>
+      </div>
+
     <div>  <span> Job Title </span>
     <select formControlName='jobTile'>
             <option *ngFor="let jobsType of JobTitle" value={{jobsType}}>
@@ -44,32 +60,36 @@
             </option>
      </select>
     </div>
-   
-    <div>  
-      <span> Job Role </span> <input type="text" formControlName='jobRole'>   
-      </div>   
-    
-    <div> 
-       <span> Address </span> <input type="text" formControlName='address'>   
-    </div> 
-    
-    <div> 
+
+    <div>
+      <span> Job Role </span> <input type="text" formControlName='jobRole' [class.validBox]="userSignup.get('jobRole').valid" [class.notValidBox]="userSignup.get('jobRole').touched && userSignup.get('jobRole').valid">
+      </div>
+
+    <div>
+       <span> Full Address </span> <input type="text" formControlName='address' [class.validBox]="userSignup.get('address').valid" [class.notValidBox]="userSignup.get('address').invalid && userSignup.get('address').touched">
+    </div>
+
+    <div>
+     <span> City </span> <input type="text" formControlName='city' [class.validBox]="userSignup.get('city').valid" [class.notValidBox]="userSignup.get('city').invalid && userSignup.get('city').touched" >
+    </div>
+
+    <div>
       <span> country </span>
          <select formControlName='country' (ngModelChange)='setCountryCode($event)'>
              <option *ngFor="let country of countries"  value={{country.country_name}}>
                     {{country.country_name}}
-      </option>        
+      </option>
        </select>
-     </div>  
-    <div>  
+     </div>
+    <div>
       <span> Phone </span>
-       <span> {{country_code}} </span>  
-       <input type="text" appOnlyNumber="true" formControlName='phone'>     
-     </div>    
-    
-     <div> <button [disabled]='!(userSignup.valid && passWorCheck)' type="submit" >Submit </button>    </div>
+       <span> {{country_code}} </span>
+       <input type="text" appOnlyNumber="true" formControlName='phone'>
+     </div>
 
-</form>    
+     <div> <button [disabled]='!(userSignup.valid && passWorCheck && userNameCheck)' type="submit" >Submit </button>    </div>
 
+</form>
 
+ <p> Have account <a router-link="/login"><button> Login </button></a> </p>
 </div>

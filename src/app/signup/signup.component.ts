@@ -22,17 +22,20 @@ export class SignupComponent implements OnInit {
     username: [ '', [Validators.required , Validators.pattern('^[_A-z0-9]{1,}$') , Validators.minLength(6)]],
     email: ['' , [Validators.required , 	Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")] ],
     password: ['' , [Validators.required , Validators.minLength(6)]],
+    confirmPass : ['' , [Validators.required , Validators.minLength(6)]],
     phone: ['' , [Validators.required , Validators.minLength(10)]],
     jobTile: ['' , Validators.required],
     country: ['' , Validators.required],
     jobRole: ['' , Validators.required],
-    address: ['', Validators.required]
- }); 
+
+    address: ['', Validators.required],
+    city:['', Validators.required],
+ });
 
   constructor(private fb: FormBuilder ,public res : SignupService ) { }
 
   ngOnInit() {
-    
+
    // console.log(this.countries[0].name);
     this.getjobTitle();
     this.countrycode();
@@ -44,7 +47,9 @@ export class SignupComponent implements OnInit {
     let username = {"username": this.userSignup.value.username}
     if(value.length >= 6 ){
     this.res.usernameCheck(username).subscribe(result => {
-      
+
+      // this.userNameCheck = result
+
       if(result['status']==0){
          this.userNameCheck = true;
       }else{
@@ -59,7 +64,7 @@ export class SignupComponent implements OnInit {
   }
 
   getjobTitle(){
-   
+
     this.res.job().subscribe(result => {
       console.log(result);
       if(result['status'] == 1){
@@ -79,15 +84,17 @@ export class SignupComponent implements OnInit {
   }
 
   checkPass(value){
+     if(this.userSignup.value.password){
      if(this.userSignup.value.password == value){
-       console.log('password match');    
+       console.log('password match');
        this.passWorCheck = true;
-      
+
     }else{
       this.passWorCheck = false;
      }
+    }
    }
- 
+
   setCountryCode(value){
     console.log(value);
     const index = this.countries.findIndex( record => record.country_name === value );

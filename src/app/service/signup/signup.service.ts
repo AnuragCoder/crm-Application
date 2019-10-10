@@ -9,13 +9,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class SignupService {
 
- baseUrl : any = "https://www.magicmindtechnologies.com/crmApi/public/api/";
-  
- signup : any =  this.baseUrl+ 'signUp';
- jobTitle : any = this.baseUrl + 'jobTitle';
- countryCode : any = this.baseUrl + 'countryCode';
- checkuserName : any = this.baseUrl + 'userNameCheck';
-  
+ baseUrl: any = "https://www.magicmindtechnologies.com/crmApi/public/api/";
+
+ signup: any =  this.baseUrl + 'signUp';
+ login: any = this.baseUrl + 'login';
+ jobTitle: any = this.baseUrl + 'jobTitle';
+ countryCode: any = this.baseUrl + 'countryCode';
+ checkuserName: any = this.baseUrl + 'userNameCheck';
+
 
   constructor(public http: HttpClient) {
     console.log(this.signup);
@@ -28,33 +29,38 @@ export class SignupService {
 
    usernameCheck(data) : Observable<any>{
 
-   
+
 
      console.log(data);
      let headers = new HttpHeaders();
-    //console.log(usertoken);
+
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
     headers = headers.append('Accept' , 'application/json');
     let httpOptions = {
       headers: new HttpHeaders({
               'Content-Type': 'application/json',
               'Accept': 'application/json',
-              // 'Authorization': ''
+
           }
       ),
         }
-  
+
      return this.http.post(this.checkuserName , data , { headers: headers });
    }
 
    country() : Observable<any>{
      return this.http.get(this.countryCode)
    }
-   
-   
 
-  SignUpUser(value) : Observable<any> {
+
+
+  SignUpUser(value): Observable<any> {
     console.log(value);
     return this.http.post(this.signup , value)
+  }
+
+  Userlogin(value): Observable<any>{
+    console.log(value);
+    return this.http.post(this.login , value)
   }
 }
