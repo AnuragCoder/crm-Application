@@ -55,8 +55,8 @@
 
     <div>  <span> Job Title </span>
     <select formControlName='jobTile'>
-            <option *ngFor="let jobsType of JobTitle" value={{jobsType}}>
-              {{jobsType}}
+            <option *ngFor="let jobsType of JobTitle" value={{jobsType.job_id}}>
+              {{jobsType.job_name}}
             </option>
      </select>
     </div>
@@ -91,5 +91,5 @@
 
 </form>
 
- <p> Have account <a router-link="/login"><button> Login </button></a> </p>
+ <p> Have account <a routerLink="/login"><button> Login </button></a> </p>
 </div>

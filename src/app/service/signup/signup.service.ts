@@ -19,7 +19,7 @@ export class SignupService {
 
 
   constructor(public http: HttpClient) {
-    console.log(this.signup);
+
    }
 
 

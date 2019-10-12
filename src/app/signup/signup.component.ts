@@ -68,14 +68,20 @@ export class SignupComponent implements OnInit {
     this.res.job().subscribe(result => {
       console.log(result);
       if(result['status'] == 1){
-        let joblist
-        joblist = result['value'];
-        for(let i = 0 ; i < joblist.length ; i++ ){
-          console.log(i);
-          console.log(joblist[i].job_name);
-          this.JobTitle.push(joblist[i].job_name);
-        }
-         console.log(this.JobTitle);
+        console.log(result['value']);
+
+        this.JobTitle = result['value'];
+        console.log(this.JobTitle);
+
+
+        // let joblist
+        // joblist = result['value'];
+        // for(let i = 0 ; i < joblist.length ; i++ ){
+        //   console.log(i);
+        //   console.log(joblist[i].job_name);
+        //   this.JobTitle.push(joblist[i].job_name);
+        // }
+        //  console.log(this.JobTitle);
       }
        },
     err => {
@@ -121,6 +127,7 @@ export class SignupComponent implements OnInit {
 
 
   submitt(){
+    console.log(this.userSignup.value.jobTile);
     console.log(this.userSignup.value);
   let data =   {
   name : this.userSignup.value.name,

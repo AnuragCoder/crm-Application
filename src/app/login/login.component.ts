@@ -1,6 +1,8 @@
 import { FormBuilder , Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { SignupService } from '../service/signup/signup.service';
+
+import { LoginService } from '../service/login/login.service';
+import { AuthenticationService } from '../_service/auth/authentication.service';
 
 
 @Component({
@@ -12,29 +14,45 @@ export class LoginComponent implements OnInit {
 
 
 
-constructor(public fb: FormBuilder , public rest : SignupService) { alert('Hello'); }
+constructor(public fb: FormBuilder , public rest : AuthenticationService) {  }
 
 userLogin =  this.fb.group({
 
   user:['', Validators.required],
   password:['' , Validators.required],
-})
+});
 
   ngOnInit() {
+
   }
 
 
 
-  onSubmit(){
+  onSubmit() {
+
+
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+
     let data = {
-      user : this.userLogin.get('user'),
-      password : this.userLogin.get('password')
+      username : this.userLogin.value.user,
+      login_time : dateTime,
+      password : this.userLogin.value.password,
     }
 
 
-    this.rest.signup(data).subscribe(result => console.log(result));
+    this.rest.userlogin(data).subscribe(result => console.log(result)
+
+
+
+
+    );
 
   }
+
+
 
 
 }
