@@ -27,7 +27,7 @@ export class AuthenticationService {
 }
 
 
-
+//https://jasonwatmore.com/post/2018/11/22/angular-7-role-based-authorization-tutorial-with-example#auth-guard-ts
 
 // baseUrl: any = "https://www.magicmindtechnologies.com/crmApi/public/api/";
 // login: any = this.baseUrl + 'login';
