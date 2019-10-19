@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SignupService } from '../service/signup/signup.service';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class SignupComponent implements OnInit {
     city:['', Validators.required],
  });
 
-  constructor(private fb: FormBuilder ,public res : SignupService ) { }
+  constructor(private fb: FormBuilder ,public res : SignupService ,public route : Router ) { }
 
   ngOnInit() {
 
@@ -90,9 +91,9 @@ export class SignupComponent implements OnInit {
   }
 
   checkPass(value){
-     if(this.userSignup.value.password){
-     if(this.userSignup.value.password == value){
-       console.log('password match');
+     if (this.userSignup.value.password) {
+     if (this.userSignup.value.password === value) {
+
        this.passWorCheck = true;
 
     }else{
@@ -145,9 +146,22 @@ export class SignupComponent implements OnInit {
 	postal_code : '',
     }
  console.log(data);
-    this.res.SignUpUser(data).subscribe(result => console.log(result));
+    this.res.SignUpUser(data).subscribe(result =>  {
+      console.log(result);
+
+      if(result['status'] == 1){
+        this.route.navigate(['/login']);
+      };
+
+    } );
   }
 
+
+  logout() {
+    console.log(localStorage.getItem('currentUser'));
+    localStorage.removeItem('currentUser');
+    console.log(localStorage.getItem('currentUser'));
+  }
 
 
 }

@@ -9,6 +9,10 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { OnlyNumberDirective } from './directive/only-number.directive';
+import { AdminComponent } from './admin/admin.component';
+import { UserComponent } from './user/user.component';
+import { DevelopmentComponent } from './development/development.component';
+import { SalesComponent } from './sales/sales.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import { OnlyNumberDirective } from './directive/only-number.directive';
     LoginComponent,
     SignupComponent,
     ChangePasswordComponent,
-    OnlyNumberDirective
+    OnlyNumberDirective,
+    AdminComponent,
+    UserComponent,
+    DevelopmentComponent,
+    SalesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,101 @@
+
+<style>
+
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+
+</style>
+
+
+<div class="sidebar">
+  <a class="active" href="#home">Dashboard</a>
+  <a href="#news">New Orders</a>
+  <a href="#contact">All Orders</a>
+  <a href="#about">Change Password</a>
+  <a href="#"> attandance </a>
+  <a href='#'> Logout </a>
+</div>
+
+<div class="content">
+
+<H1> User Requirnment  Form for Sales Team </H1>
+
+
+<form [formGroup]="PackageDetails" (ngSubmit)="onSubmit()">
+
+ <span> customerName </span> <input type='text' formControlName="customerName"> <br>
+ <span> customerPhone </span> <input type='text' formControlName="customerPhone" appOnlyNumber="true"> <br>
+ <span> businessName </span> <input type='text' formControlName="businessName"> <br>
+ <span> customerEmail </span> <input type='text' formControlName="customerEmail"> <br>
+ <span> customerAddress </span> <input type='text' formControlName="customerAddress"> <br>
+ <span> fullPackage </span> <input type='text' formControlName="fullPackage"> <br>
+ <span> packageDetails</span> <input type='text' formControlName="packageDetails"> <br>
+ <span> signUpAmount</span> <input type='text' formControlName="signUpAmount" appOnlyNumber="true"> <br>
+ <span> totalPackageFee</span> <input type='text' formControlName="totalPackageFee"> <br>
+ <span> packageTypeId </span>
+
+ <select  formControlName="packageTypeId">
+   <option *ngFor="let data of pTypeId" value={{data.package_id}}>
+     {{data.package_name}}
+
+   </option>
+
+</select> <br>
+<input type='submit' value='submit'>
+
+
+</form>
+
+
+</div>
+
+

@@ -42,27 +42,29 @@
 
     <div>
         <span> Password </span>
-        <input type="password" (mouseout)="checkPass($event.target.value)" formControlName='password' [class.validBox]="userSignup.get('password').valid && passWorCheck" [class.notValidBox]="userSignup.get('password').invalid && userSignup.get('password').touched">
+        <input type="password"  (input)="(userSignup.get('password').touched  &&  userSignup.get('confirmPass').value)  ? checkPass($event.target.value) : null"  formControlName='password' [class.validBox]="userSignup.get('password').valid && passWorCheck" [class.notValidBox]="userSignup.get('password').invalid && userSignup.get('password').touched">
        <span *ngIf='userSignup.get("password").touched && userSignup.get("password").invalid'>Password should be minimum 6 digit</span>
        <span *ngIf='userSignup.get("password").touched && userSignup.get("password").valid && !(passWorCheck)'>Your Password is valid now Please confirm it </span>
+
+
       </div>
 
     <div>
        <span> Confirm Password </span>
-       <input type="text" formControlName="confirmPass"  (input)="checkPass($event.target.value)" [class.validBox]="userSignup.get('confirmPass').valid && passWorCheck" [class.notValidBox]="userSignup.get('confirmPass').touched && !(passWorCheck)">
+       <input type="text" formControlName="confirmPass"    (input)="(userSignup.get('confirmPass').touched  &&  userSignup.get('password').value)  ? checkPass($event.target.value) : null" [class.validBox]="userSignup.get('confirmPass').valid && passWorCheck" [class.notValidBox]="userSignup.get('confirmPass').touched && !(passWorCheck)">
        <p *ngIf="passWorCheck" style="color:red"> Password Matched </p>
       </div>
 
     <div>  <span> Job Title </span>
     <select formControlName='jobTile'>
-            <option *ngFor="let jobsType of JobTitle" value={{jobsType.job_id}}>
+            <option *ngFor="let jobsType of JobTitle" [disabled]="jobsType.job_id == 1" value={{jobsType.job_id}}>
               {{jobsType.job_name}}
             </option>
      </select>
     </div>
 
     <div>
-      <span> Job Role </span> <input type="text" formControlName='jobRole' [class.validBox]="userSignup.get('jobRole').valid" [class.notValidBox]="userSignup.get('jobRole').touched && userSignup.get('jobRole').valid">
+      <span> Job Role </span> <input type="text"  formControlName='jobRole' [class.validBox]="userSignup.get('jobRole').valid" [class.notValidBox]="userSignup.get('jobRole').touched && userSignup.get('jobRole').invalid">
       </div>
 
     <div>
@@ -93,3 +95,6 @@
 
  <p> Have account <a routerLink="/login"><button> Login </button></a> </p>
 </div>
+
+
+<button (click)="logout()"> Logout </button>

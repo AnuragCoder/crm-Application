@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
 
 
-constructor(public fb: FormBuilder , public rest : AuthenticationService) {  }
+constructor(public fb: FormBuilder , public rest: AuthenticationService) {  }
 
 userLogin =  this.fb.group({
 
@@ -43,13 +43,15 @@ userLogin =  this.fb.group({
     }
 
 
-    this.rest.userlogin(data).subscribe(result => console.log(result)
+    this.rest.userlogin(data).subscribe(result => console.log(result) );
+
+  }
 
 
-
-
-    );
-
+  logout() {
+    console.log(localStorage.getItem('currentUser'));
+    localStorage.removeItem('currentUser');
+    console.log(localStorage.getItem('currentUser'));
   }
 
 
