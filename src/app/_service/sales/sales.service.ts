@@ -10,6 +10,7 @@ export class SalesService {
 
   baseUrl: any = "https://www.magicmindtechnologies.com/crmApi/public/api/";
   salesInfo: any = this.baseUrl + 'salesCustomerInfo';
+  addProposals: any = 'addProposals';
 
 //   auth-token	:	NTJlYjdhZThkNzkzMDg1ZTBkYTAxOThmY2Y0NGI3YTllNGYxZDE3ODRmMzgyNTFmNjk2NDMyOTAzYWNjNDExMQ==
 // username	:	taniya
@@ -35,6 +36,13 @@ packageType: any = this.baseUrl + 'packageType';
 
     return this.http.post<any>(this.salesInfo ,  value , {headers});
 
+  }
+
+  newProposals(value , token) {
+   let headers = new HttpHeaders();
+   headers = headers.append('Content-Type', 'application/json; charset=utf-8');
+   headers = headers.append('Authorization', token);
+   return this.http.post<any>(this.addProposals , value , {headers});
   }
 
 

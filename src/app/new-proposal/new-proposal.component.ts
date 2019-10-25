@@ -1,19 +1,19 @@
-import { FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { SalesService } from '../_service/sales/sales.service';
-
-
+import { SalesService } from 'src/app/_service/sales/sales.service';
+import { FormBuilder } from '@angular/forms';
 
 
 
 @Component({
-  selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss']
+  selector: 'app-new-proposal',
+  templateUrl: './new-proposal.component.html',
+  styleUrls: ['./new-proposal.component.scss']
 })
-export class SalesComponent implements OnInit {
+export class NewProposalComponent implements OnInit {
 
   pTypeId: any = [];
+  addCustomer: boolean = false;
+  addCusromerStatus: any;
 
   constructor(public rest: SalesService , public fb: FormBuilder) {  }
 
@@ -28,11 +28,7 @@ export class SalesComponent implements OnInit {
     signUpAmount: [''],
     totalPackageFee : [''],
     packageTypeId : [''],
-
-
-
-
-  });
+ });
 
 
 
@@ -52,6 +48,23 @@ export class SalesComponent implements OnInit {
 
     });
 
+  }
+
+
+  onCustomerAdd(value){
+    console.log(value);
+    if(value['status'] == 1){
+      this.addCusromerStatus  = value['message'];
+
+      this.addCustomer = false;
+
+    }
+  }
+
+  addCustomerField(){
+    console.log(!this.addCustomer);
+     this.addCustomer = !(this.addCustomer);
+     console.log(this.addCustomer);
   }
 
 

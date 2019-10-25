@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,15 @@ import { OnlyNumberDirective } from './directive/only-number.directive';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { DevelopmentComponent } from './development/development.component';
-import { SalesComponent } from './sales/sales.component';
+
+import { AddCustomersComponent } from './add-customers/add-customers.component';
+import { ProfileComponent } from './profile/profile.component';
+import { TicketComponent } from './ticket/ticket.component';
+import { CallsDetailsComponent } from './calls-details/calls-details.component';
+import { NewProposalComponent } from './new-proposal/new-proposal.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -24,7 +32,12 @@ import { SalesComponent } from './sales/sales.component';
     AdminComponent,
     UserComponent,
     DevelopmentComponent,
-    SalesComponent
+
+    AddCustomersComponent,
+    ProfileComponent,
+    TicketComponent,
+    CallsDetailsComponent ,
+    NewProposalComponent
   ],
   imports: [
     BrowserModule,

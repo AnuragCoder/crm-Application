@@ -16,6 +16,13 @@ export class SignupService {
  jobTitle: any = this.baseUrl + 'jobTitle';
  countryCode: any = this.baseUrl + 'countryCode';
  checkuserName: any = this.baseUrl + 'userNameCheck';
+ checkPhoneNoClone: any = this.baseUrl + 'userPhoneNumberCheck';
+ checkEamil: any = this.baseUrl + 'userEmailCheck';
+
+
+
+
+
 
 
   constructor(public http: HttpClient) {
@@ -63,4 +70,15 @@ export class SignupService {
     console.log(value);
     return this.http.post(this.login , value)
   }
+
+
+  checkPhone(value){
+   return this.http.post(this.checkPhoneNoClone , value);
+  }
+
+  checkemail(value) {
+    return this.http.post(this.checkEamil , value);
+  }
+
+
 }

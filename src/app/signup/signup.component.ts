@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SignupService } from '../service/signup/signup.service';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class SignupComponent implements OnInit {
  country_code : any;
  passWorCheck : boolean =  false;
  userNameCheck : boolean = false;
+ PhoneDublicacyStaus: any;
+ emailDuplicacy: any;
 
   userSignup = this.fb.group({
     name: ['' , Validators.required  ],
@@ -24,7 +27,7 @@ export class SignupComponent implements OnInit {
     email: ['' , [Validators.required , 	Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")] ],
     password: ['' , [Validators.required , Validators.minLength(6)]],
     confirmPass : ['' , [Validators.required , Validators.minLength(6)]],
-    phone: ['' , [Validators.required , Validators.minLength(10)]],
+    phone: ['' , [Validators.required , Validators.minLength(10) , Validators.maxLength(10)]],
     jobTile: ['' , Validators.required],
     country: ['' , Validators.required],
     jobRole: ['' , Validators.required],
@@ -154,6 +157,41 @@ export class SignupComponent implements OnInit {
       };
 
     } );
+  }
+
+
+  checkPhoneNO(value){
+
+   const data  =  {
+      phone_number	:	value,
+    };
+
+   this.res.checkPhone(data).subscribe(result => {
+       console.log(result);
+
+       if(result['status']){
+         console.log(result['message']);
+         this.PhoneDublicacyStaus = result['message'];
+         console.log(this.PhoneDublicacyStaus);
+       }
+    }
+      );
+
+  }
+
+  checkMail(data){
+
+    if(this.userSignup.get('email').valid) {
+    this.res.checkemail({email: data}).subscribe(result => {
+
+      if(result['status']){
+          this.emailDuplicacy = result['message']
+      }
+
+
+      console.log(result);
+    });
+    }
   }
 
 

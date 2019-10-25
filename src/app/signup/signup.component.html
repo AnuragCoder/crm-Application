@@ -35,9 +35,10 @@
 
     <div>
        <span> Email </span>
-      <input type="text" formControlName='email' [class.validBox]="userSignup.get('email').valid" [class.notValidBox]="userSignup.get('email').invalid && userSignup.get('email').touched">
-           <span *ngIf='userSignup.get("email").valid && userSignup.get("email").touched'> Email is valid </span>
+      <input type="text" formControlName='email' [class.validBox]="userSignup.get('email').valid" [class.notValidBox]="userSignup.get('email').invalid && userSignup.get('email').touched"  (input)="(userSignup.get('email').valid && userSignup.get('email').touched) ? checkMail($event.target.value) : null"  >
+           <!-- <span *ngIf='userSignup.get("email").valid && userSignup.get("email").touched'> Email is valid </span> -->
            <span  *ngIf='userSignup.get("email").invalid && userSignup.get("email").touched '> Email is invalid </span>
+           <span *ngIf='userSignup.get("email").invalid && userSignup.get("email").touched'> {{emailDuplicacy}} </span>
     </div>
 
     <div>
@@ -86,8 +87,10 @@
     <div>
       <span> Phone </span>
        <span> {{country_code}} </span>
-       <input type="text" appOnlyNumber="true" formControlName='phone'>
-     </div>
+       <input type="text" appOnlyNumber="true"  formControlName='phone' [class.validBox]="userSignup.get('phone').valid" [class.notValidBox]="userSignup.get('phone').invalid && userSignup.get('phone').touched" (input)="(userSignup.get('phone').valid && userSignup.get('phone').touched) ?  checkPhoneNO($event.target.value) : null">
+    <span *ngIf="userSignup.get('phone').invalid && userSignup.get('phone').touched"> please enater a valied phone number </span>
+    <span *ngIf="userSignup.get('phone').valid && PhoneDublicacyStaus"> {{PhoneDublicacyStaus}} </span>
+      </div>
 
      <div> <button [disabled]='!(userSignup.valid && passWorCheck && userNameCheck)' type="submit" >Submit </button>    </div>
 

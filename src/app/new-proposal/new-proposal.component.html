@@ -1,0 +1,38 @@
+
+
+
+
+
+<button (click)='addCustomerField()'> Add Customers+ </button>
+
+
+  <app-add-customers *ngIf='addCustomer' (onCustomerAdded)="onCustomerAdd($event)" ></app-add-customers>
+
+
+  <form [formGroup]='PackageDetails' (ngSubmit)="onSubmit()">
+
+
+   <div>
+        <H1> Project Details </H1>
+        <span> fullPackage </span> <input type='text' formControlName="fullPackage"> <br>
+        <span> packageDetails</span> <input type='text' formControlName="packageDetails"> <br>
+        <span> signUpAmount</span> <input type='text' formControlName="signUpAmount" appOnlyNumber="true"> <br>
+        <span> totalPackageFee</span> <input type='text' formControlName="totalPackageFee"> <br>
+        <span> packageType </span>
+
+        <select  formControlName="packageTypeId">
+          <option *ngFor="let data of pTypeId" value={{data.package_id}}>
+            {{data.package_name}}
+          </option>
+        </select> <br>
+   </div>
+
+   <input type='submit' value='submit'>
+
+
+  </form>
+
+
+
+
+
