@@ -8,10 +8,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { OnlyNumberDirective } from './directive/only-number.directive';
+import { OnlyNumberDirective } from './_directive/only-number.directive';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
-import { DevelopmentComponent } from './development/development.component';
+
 
 import { AddCustomersComponent } from './add-customers/add-customers.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -31,7 +31,7 @@ import { NewProposalComponent } from './new-proposal/new-proposal.component';
     OnlyNumberDirective,
     AdminComponent,
     UserComponent,
-    DevelopmentComponent,
+
 
     AddCustomersComponent,
     ProfileComponent,

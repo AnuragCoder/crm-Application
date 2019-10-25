@@ -9,7 +9,7 @@ export class AppComponent {
 
 
   title = 'SingindCrmApp';
-  selectedItem : any;
+
 
   route: any = [
     {name : 'Add customer' , route : 'addCustomer'},
@@ -18,14 +18,19 @@ export class AppComponent {
     {name : 'All Calls' , route : 'calls'},
     {name : 'Ticket' , route : 'ticket'},
     {name : 'Profile' , route : 'profile'},
+    {name : 'logout' , route: 'login'}
   ];
+
+  selectedItem: any = this.route[0];
 
   constructor() {}
 
    activeList(value) {
-
     this.selectedItem = value;
-    console.log(this.selectedItem);
+    console.log(this.selectedItem.route);
+    if (this.selectedItem.route === 'login') {
+      localStorage.removeItem('currentUser');
+    }
   }
 
 }

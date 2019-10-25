@@ -49,9 +49,7 @@ userLogin =  this.fb.group({
 
 
   logout() {
-    console.log(localStorage.getItem('currentUser'));
     localStorage.removeItem('currentUser');
-    console.log(localStorage.getItem('currentUser'));
   }
 
 
