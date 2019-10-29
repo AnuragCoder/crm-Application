@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { SalesService } from 'src/app/_service/sales/sales.service';
 import { FormBuilder } from '@angular/forms';
 import { CustomerService } from '../_service/customer/customer.service';
+import {Observable} from 'rxjs';
+import {startWith, map} from 'rxjs/operators';
+
+
 
 
 
@@ -13,9 +17,12 @@ import { CustomerService } from '../_service/customer/customer.service';
 export class NewProposalComponent implements OnInit {
 
   pTypeId: any = [];
-  addCustomer: boolean = false;
+  addCustomer:boolean = false;
   addCusromerStatus: any;
-  customers: any ;
+  customers: any;
+  userList1  : any = [];
+  lastkeydown1: number = 0;
+
 
   constructor(public rest: SalesService , public fb: FormBuilder , public HttpCustomer : CustomerService) {  }
 
@@ -38,7 +45,46 @@ export class NewProposalComponent implements OnInit {
 
     this.getPackageType();
     this.getCustomer();
+ }
+
+ getCustomer() {
+  const token  = localStorage.getItem('currentUser');
+  this.HttpCustomer.getCustomers(token).subscribe(result => {
+    console.log(result);
+    console.log(result['value'].length);
+    this.customers = result['value'];
+  }); }
+
+
+ getUserIdsFirstWay($event) {
+
+   const userId = (document.getElementById('userIdFirstWay') as HTMLInputElement).value;
+
+   this.userList1 = [];
+
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      this.userList1 = this.searchFromArray(this.customers, userId);
+      console.log(this.userList1);
+    }
   }
+}
+
+searchFromArray(arr, regex) {
+   // http://www.mukeshkumar.net/articles/angular/3-ways-to-implement-autocomplete-textbox-in-angular-with-typescript-on-large-data
+  // tslint:disable-next-line:prefer-const
+  // tslint:disable-next-line:one-variable-per-declaration
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].customerName.match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  console.log(matches);
+  return matches;
+};
+
+
 
   getPackageType() {
     const token  = localStorage.getItem('currentUser');
@@ -64,7 +110,7 @@ export class NewProposalComponent implements OnInit {
     }
   }
 
-  addCustomerField(){
+  addCustomerField() {
     console.log(!this.addCustomer);
      this.addCustomer = !(this.addCustomer);
      console.log(this.addCustomer);
@@ -94,12 +140,10 @@ export class NewProposalComponent implements OnInit {
   }
 
 
-  getCustomer() {
-    const token  = localStorage.getItem('currentUser');
-    this.HttpCustomer.getCustomers(token).subscribe(result => {
-      console.log(result);
-      this.customers = result;
-    });
-  }
+
+
+
+
+
 
 }

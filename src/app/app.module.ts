@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,8 @@ import { CallsDetailsComponent } from './calls-details/calls-details.component';
 import { NewProposalComponent } from './new-proposal/new-proposal.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
@@ -45,7 +48,12 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule ,
+    MatFormFieldModule ,
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

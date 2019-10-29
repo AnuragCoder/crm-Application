@@ -26,6 +26,16 @@
 
    <div>
         <H1> Project Details </H1>
+
+
+          <input type="text" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" />
+      <datalist id="dynmicUserIds">
+        <option *ngFor="let item of userList1" [value]="item">{{item}}</option>
+      </datalist>
+
+
+
+
       <div>  <span> Customer Name </span> <input type='text' formControlName="customerName"> </div>
       <div>  <span> fullPackage </span> <input type='text' formControlName="fullPackage">  </div>
       <div>  <span> packageDetails</span> <input type='text' formControlName="packageDetails"> </div>
