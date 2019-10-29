@@ -41,30 +41,8 @@ export class AuthenticationService {
 // }
 
 userlogin(value): Observable<any> {
-    return this.http.post<any>(this.loginUrl, value)
-        .pipe(map(user => {
-          console.log(user);
-      if((user['status'] == 1) && user['auth_token']){
-            localStorage.setItem('currentUser', user['auth_token']);
+    return this.http.post<any>(this.loginUrl, value);
 
-            alert('go');
-            if(user['job_id'] == 1){
-              console.log(user['job_id']);
-             this.router.navigate(['/admin']);
-            }else if(user['job_id'] == 2){
-              alert(status['job_id']);
-              this.router.navigate(['/sales']);
-            }else if(user['job_id']== 3){
-              alert(status['job_id']);
-              this.router.navigate(['/development']);
-            }else {
-              alert('else');
-            }
-         }
-
-           return user;
-
-        }));
 }
 
 logout() {
@@ -77,3 +55,40 @@ logout() {
 
 
 }
+
+
+
+
+
+
+
+
+// userlogin(value): Observable<any> {
+//   return this.http.post<any>(this.loginUrl, value)
+//       .pipe(map(user => {
+//         console.log(user);
+//         if ((user.status === 1) && user.auth_token) {
+
+//           localStorage.setItem('currentUser', user.auth_token);
+//           console.log(user.job_title);
+//           console.log(user.job_title);
+
+//           if (user.job_id === 1) {
+//             console.log(user.job_id);
+
+//             this.router.navigate(['/admin']);
+
+//           } else if(user.job_id === 2) {
+//             this.router.navigate(['/sales']);
+//           } else if(user.job_id === 3){
+//             alert(user.job_id);
+//             this.router.navigate(['/development']);
+//           } else {
+//             alert('else');
+//           }
+//        }
+
+//         return user;
+
+//       }));
+// }

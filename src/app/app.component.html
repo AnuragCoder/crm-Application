@@ -12,28 +12,12 @@
       overflow: auto;
     }
 
-    .sidebar a {
-      display: block;
-      color: black;
-      padding: 16px;
-      text-decoration: none;
-    }
-
-    .sidebar a.active {
-      background-color: #4c56af;
-      color: white;
-    }
-
-    .sidebar a:hover:not(.active) {
-      background-color: #555;
-      color: white;
-    }
-
     div.content {
       margin-left: 200px;
       padding: 1px 16px;
       height: 1000px;
     }
+
 
     @media screen and (max-width: 700px) {
       .sidebar {
@@ -41,7 +25,6 @@
         height: auto;
         position: relative;
       }
-      .sidebar a {float: left;}
       div.content {margin-left: 0;}
     }
 
@@ -56,21 +39,14 @@
     </style>
 
 
-    <div class="sidebar">
-      <div *ngFor='let routes  of route'>
+    <div class="sidebar"   *ngIf="token" >
+      <app-side-nav> </app-side-nav>
+      <!-- <div *ngFor='let routes  of route'>
        <a   [ngClass]="{'active' : selectedItem == routes}" (click)='activeList(routes)'   routerLink='/{{routes.route}}'> {{routes.name}} </a>
-      </div>
-      <!-- <a class="active" routerLink='/addCustomer'>Add customer</aa>
-      <a routerLink="/newProposal">New Proposal</a>
-      <a routerLink="/newProposal">All proposal</a>
-      <a routerLink="/calls">All Calls</a>
-      <a routerLink="/ticket"> Ticket </a>
+      </div> -->
+  </div>
 
-      <a routerLink="/profile"> Profile </a> -->
-
-    </div>
-
-    <div class="content">
+    <div class="content"  [ngClass]="{'content' : token}" >
 
         <router-outlet></router-outlet>
 

@@ -9,7 +9,10 @@ import { HttpHeaders } from '@angular/common/http';
 export class CustomerService {
 
   baseUrl: any = 'https://www.magicmindtechnologies.com/crmApi/public/api/';
-  addCusromer  = this.baseUrl + 'addCustomer';
+   // tslint:disable-next-line:variable-name
+  addCusromer_Api  = this.baseUrl + 'addCustomer';
+     // tslint:disable-next-line:variable-name
+  getCustomer_Api = this.baseUrl + 'getAllCustomerInfo';
 
   constructor(private http: HttpClient) { }
 
@@ -18,9 +21,16 @@ export class CustomerService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', token);
 
-    const newLocal = this.http.post<any>(this.addCusromer, data , {headers});
+    const newLocal = this.http.post<any>(this.addCusromer_Api, data , {headers});
     return newLocal;
 
+  }
+
+  getCustomers(value) {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', value);
+    const customers = this.http.get<any>(this.getCustomer_Api , {headers});
+    return customers;
   }
 
 

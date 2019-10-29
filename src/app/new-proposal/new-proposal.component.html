@@ -1,6 +1,18 @@
 
-
-
+<style>
+  div {
+    margin-top: 6%;
+  }
+ </style>
+<!-- {
+	"customerId"		:	"6",
+	"package_type_id"	:	"2",
+	"package_list_id"	:	"3",
+	"proposal_details"	:	"Business Analysis.Keyword Analysis.",
+	"signup_amount"		:	"$120",
+	"total_package_fee"	:	"$20",
+	"full_package"		:	"$80"
+} -->
 
 
 <button (click)='addCustomerField()'> Add Customers+ </button>
@@ -14,11 +26,12 @@
 
    <div>
         <H1> Project Details </H1>
-        <span> fullPackage </span> <input type='text' formControlName="fullPackage"> <br>
-        <span> packageDetails</span> <input type='text' formControlName="packageDetails"> <br>
-        <span> signUpAmount</span> <input type='text' formControlName="signUpAmount" appOnlyNumber="true"> <br>
-        <span> totalPackageFee</span> <input type='text' formControlName="totalPackageFee"> <br>
-        <span> packageType </span>
+      <div>  <span> Customer Name </span> <input type='text' formControlName="customerName"> </div>
+      <div>  <span> fullPackage </span> <input type='text' formControlName="fullPackage">  </div>
+      <div>  <span> packageDetails</span> <input type='text' formControlName="packageDetails"> </div>
+      <div>  <span> signUpAmount</span> <input type='text' formControlName="signUpAmount" appOnlyNumber="true"></div>
+     <div>  <span> totalPackageFee</span> <input type='text' formControlName="totalPackageFee">  </div>
+    <div> <span> packageType </span>
 
         <select  formControlName="packageTypeId">
           <option *ngFor="let data of pTypeId" value={{data.package_id}}>
@@ -28,6 +41,8 @@
    </div>
 
    <input type='submit' value='submit'>
+
+   </div>
 
 
   </form>

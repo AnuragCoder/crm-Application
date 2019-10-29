@@ -18,6 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TicketComponent } from './ticket/ticket.component';
 import { CallsDetailsComponent } from './calls-details/calls-details.component';
 import { NewProposalComponent } from './new-proposal/new-proposal.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 
 
@@ -37,7 +38,8 @@ import { NewProposalComponent } from './new-proposal/new-proposal.component';
     ProfileComponent,
     TicketComponent,
     CallsDetailsComponent ,
-    NewProposalComponent
+    NewProposalComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule,

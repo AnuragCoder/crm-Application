@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SalesService } from 'src/app/_service/sales/sales.service';
 import { FormBuilder } from '@angular/forms';
+import { CustomerService } from '../_service/customer/customer.service';
 
 
 
@@ -14,8 +15,9 @@ export class NewProposalComponent implements OnInit {
   pTypeId: any = [];
   addCustomer: boolean = false;
   addCusromerStatus: any;
+  customers: any ;
 
-  constructor(public rest: SalesService , public fb: FormBuilder) {  }
+  constructor(public rest: SalesService , public fb: FormBuilder , public HttpCustomer : CustomerService) {  }
 
   PackageDetails = this.fb.group({
     customerName : [''],
@@ -35,6 +37,7 @@ export class NewProposalComponent implements OnInit {
   ngOnInit() {
 
     this.getPackageType();
+    this.getCustomer();
   }
 
   getPackageType() {
@@ -88,6 +91,15 @@ export class NewProposalComponent implements OnInit {
     console.log(data);
 
     this.rest.packageDetails(data , token).subscribe( result => {console.log(result); });
+  }
+
+
+  getCustomer() {
+    const token  = localStorage.getItem('currentUser');
+    this.HttpCustomer.getCustomers(token).subscribe(result => {
+      console.log(result);
+      this.customers = result;
+    });
   }
 
 }
