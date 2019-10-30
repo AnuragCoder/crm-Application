@@ -9,8 +9,10 @@ import { AdminComponent } from './admin/admin.component';
 import { AddCustomersComponent } from './add-customers/add-customers.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TicketComponent } from './ticket/ticket.component';
-import { CallsDetailsComponent } from './calls-details/calls-details.component';
+
 import { AuthGuard } from './_guards/auth.guard';
+import { AllProposalComponent } from './all-proposal/all-proposal.component';
+
 
 
 
@@ -23,10 +25,10 @@ const routes: Routes = [
   {path: 'admin' , component: AdminComponent , canActivate: [AuthGuard] },
   {path: 'newProposal' , component: NewProposalComponent , canActivate: [AuthGuard] },
   {path: 'addCustomer' , component : AddCustomersComponent , canActivate: [AuthGuard]},
-
+  {path : 'allProposal' , component :  AllProposalComponent , canActivate: [AuthGuard] },
   {path: 'profile' , component: ProfileComponent , canActivate: [AuthGuard] },
   {path: 'ticket' , component: TicketComponent , canActivate: [AuthGuard]},
-  {path: 'calls' , component: CallsDetailsComponent , canActivate: [AuthGuard]}
+
 ];
 
 @NgModule({

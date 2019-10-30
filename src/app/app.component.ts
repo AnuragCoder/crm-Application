@@ -22,7 +22,7 @@ export class AppComponent  {
     {name : 'Add customer' , route : 'addCustomer'},
     {name : 'New Proposal' , route : 'newProposal'},
     {name : 'All proposal' , route : 'allProposal'},
-    {name : 'All Calls' , route : 'calls'},
+    // {name : 'All Calls' , route : 'calls'},
     {name : 'Ticket' , route : 'ticket'},
     {name : 'Profile' , route : 'profile'},
     {name : 'logout' , route: 'login'}

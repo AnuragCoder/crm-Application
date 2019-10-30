@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SalesService } from 'src/app/_service/sales/sales.service';
+
 import { FormBuilder } from '@angular/forms';
 import { CustomerService } from '../_service/customer/customer.service';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
+import { PropasalService } from '../_service/proposal/propasal.service';
 
 
 
@@ -20,23 +21,22 @@ export class NewProposalComponent implements OnInit {
   addCustomer:boolean = false;
   addCusromerStatus: any;
   customers: any;
-  userList1  : any = [];
+  userList1 : any = [];
   lastkeydown1: number = 0;
+  packageList: any[] = [];
 
 
-  constructor(public rest: SalesService , public fb: FormBuilder , public HttpCustomer : CustomerService) {  }
+  constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer : CustomerService) {  }
 
   PackageDetails = this.fb.group({
-    customerName : [''],
-    customerPhone : [''],
-    businessName : [''],
-    customerEmail : [''],
-    customerAddress : [''],
-    fullPackage: [''],
+    customerId : [''],
+    packag_type : [''],
+    package_list_id : [''],
+    proposal_details : [''],
     packageDetails : [''],
     signUpAmount: [''],
     totalPackageFee : [''],
-    packageTypeId : [''],
+    full_package : [''],
  });
 
 
@@ -47,6 +47,30 @@ export class NewProposalComponent implements OnInit {
     this.getCustomer();
  }
 
+
+ onSubmit() {
+
+
+  const token  = localStorage.getItem('currentUser');
+  const data = {
+    //this.PackageDetails.get('customerId').value
+    customerId: 19,
+    package_type_id	:	this.PackageDetails.get('packag_type').value,
+    package_list_id	:	this.PackageDetails.get('package_list_id').value,
+    proposal_details	: this.PackageDetails.get('packageDetails').value,
+    signUpAmount	:	this.PackageDetails.get('signUpAmount').value,
+    totalPackageFee	:	this.PackageDetails.get('totalPackageFee').value,
+
+    fullPackage	:	this.PackageDetails.get('full_package').value,
+    };
+
+
+
+  console.log(data);
+
+   this.rest.newProposals(data , token).subscribe( result => {console.log(result); });
+}
+
  getCustomer() {
   const token  = localStorage.getItem('currentUser');
   this.HttpCustomer.getCustomers(token).subscribe(result => {
@@ -54,6 +78,8 @@ export class NewProposalComponent implements OnInit {
     console.log(result['value'].length);
     this.customers = result['value'];
   }); }
+
+
 
 
  getUserIdsFirstWay($event) {
@@ -99,6 +125,19 @@ searchFromArray(arr, regex) {
 
   }
 
+  getpackListName(){
+    const token  = localStorage.getItem('currentUser');
+    console.log(token);
+    let value = {'packagetypeId' : this.PackageDetails.get('packag_type').value};
+    console.log(value);
+    this.rest.getpackList( value , token).subscribe(result => {console.log(result);
+                                                               if (result.status == 1) {
+      this.packageList  = result.value;
+      }
+
+    });
+  }
+
 
   onCustomerAdd(value){
     console.log(value);
@@ -117,27 +156,7 @@ searchFromArray(arr, regex) {
   }
 
 
-  onSubmit() {
 
-    console.log(this.PackageDetails.get('customerName').value);
-    const token  = localStorage.getItem('currentUser');
-    const data = {
-      customerName: this.PackageDetails.get('customerName').value,
-      customerPhone	:	this.PackageDetails.get('customerPhone').value,
-      businessName	:	this.PackageDetails.get('businessName').value,
-      customerEmail	:	this.PackageDetails.get('customerEmail').value,
-      customerAddress	: this.PackageDetails.get('customerAddress').value,
-      fullPackage	:	this.PackageDetails.get('fullPackage').value,
-      packageDetails	: this.PackageDetails.get('packageDetails').value,
-      signUpAmount	:	this.PackageDetails.get('signUpAmount').value,
-      totalPackageFee	:	this.PackageDetails.get('totalPackageFee').value,
-      packageTypeId	:	this.PackageDetails.get('packageTypeId').value,
-      };
-
-    console.log(data);
-
-    this.rest.packageDetails(data , token).subscribe( result => {console.log(result); });
-  }
 
 
 

@@ -17,12 +17,13 @@ import { UserComponent } from './user/user.component';
 import { AddCustomersComponent } from './add-customers/add-customers.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TicketComponent } from './ticket/ticket.component';
-import { CallsDetailsComponent } from './calls-details/calls-details.component';
+
 import { NewProposalComponent } from './new-proposal/new-proposal.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AllProposalComponent } from './all-proposal/all-proposal.component';
 
 
 
@@ -40,9 +41,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AddCustomersComponent,
     ProfileComponent,
     TicketComponent,
-    CallsDetailsComponent ,
     NewProposalComponent,
-    SideNavComponent
+    SideNavComponent,
+    AllProposalComponent
   ],
   imports: [
     BrowserModule,
