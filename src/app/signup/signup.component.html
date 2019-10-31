@@ -25,9 +25,9 @@
 
     <div>
       <span> Username </span>
-      <input type="text" [class.validBox]="userSignup.get('username').valid && userNameCheck" [class.notValidBox]="userSignup.get('username').invalid && userSignup.get('username').touched"   formControlName='username' (input)="checkusername($event.target.value)">
-      <span *ngIf='userNameCheck && userSignup.get("username").valid && userSignup.get("username").touched'> UserName Available </span>
-      <span *ngIf='!userNameCheck  && userSignup.get("username").touched && userSignup.get("username").valid'> Username already exist </span>
+      <input type="text" [class.validBox]="userSignup.get('username').valid && !userNameCheck" [class.notValidBox]="userSignup.get('username').invalid && userSignup.get('username').touched"   formControlName='username' (input)="checkusername($event.target.value)">
+      <span *ngIf='!userNameCheck && userSignup.get("username").valid && userSignup.get("username").touched'> UserName Available </span>
+      <span *ngIf='userNameCheck  && userSignup.get("username").touched && userSignup.get("username").valid'> Username already exist </span>
       <span *ngIf='userSignup.get("username").touched && userSignup.get("username").invalid'> UserName Should be 6 digit with no Space </span>
 
     </div>
@@ -58,7 +58,7 @@
 
     <div>  <span> Job Title </span>
     <select formControlName='jobTile'>
-            <option *ngFor="let jobsType of JobTitle" [disabled]="jobsType.job_id == 1" value={{jobsType.job_id}}>
+            <option *ngFor="let jobsType of JobTitle" [disabled]="jobsType.id == 1" [value]="jobsType.id">
               {{jobsType.job_name}}
             </option>
      </select>
@@ -92,8 +92,18 @@
     <span *ngIf="userSignup.get('phone').valid && PhoneDublicacyStaus"> {{PhoneDublicacyStaus}} </span>
       </div>
 
-     <div> <button [disabled]='!(userSignup.valid && passWorCheck && userNameCheck)' type="submit" >Submit </button>    </div>
-
+     <div> <button [disabled]='!(userSignup.valid && passWorCheck && !userNameCheck)' type="submit" >Submit </button>    </div>
+  <!-- <P> {{userSignup.valid}} </P>
+  <P> name :  {{userSignup.get("name").valid}} </P>
+  <P> username :  {{userSignup.get("username").valid}} </P>
+  <P>email :  {{userSignup.get("email").valid}} </P>
+  <P> password :  {{userSignup.get("password").valid}} </P>
+  <P> jobTile :  {{userSignup.get("jobTile").valid}} {{userSignup.get("jobTile").value}} </P>
+  <P> jobRole :  {{userSignup.get("jobRole").valid}}  {{userSignup.get("jobRole").value}}</P>
+  <P> address :  {{userSignup.get("address").valid}} </P>
+  <P> city :  {{userSignup.get("city").valid}} </P>
+  <P> country :  {{userSignup.get("country").valid}} </P>
+  <P> phone :  {{userSignup.get("phone").valid}} </P> -->
 </form>
 
  <p> Have account <a routerLink="/login"><button> Login </button></a> </p>

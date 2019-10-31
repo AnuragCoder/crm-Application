@@ -24,6 +24,8 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AllProposalComponent } from './all-proposal/all-proposal.component';
+import { DetailedProposalComponent } from './detailed-proposal/detailed-proposal.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -43,7 +45,9 @@ import { AllProposalComponent } from './all-proposal/all-proposal.component';
     TicketComponent,
     NewProposalComponent,
     SideNavComponent,
-    AllProposalComponent
+    AllProposalComponent,
+    DetailedProposalComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

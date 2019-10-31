@@ -1,9 +1,10 @@
 import { FormBuilder , Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-
-import { LoginService } from '../service/login/login.service';
 import { AuthenticationService } from '../_service/auth/authentication.service';
 import { Router } from '@angular/router';
+import { RouteService } from '../_commonStorage/route/route.service';
+
+
 
 
 @Component({
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
 
 
-constructor(public fb: FormBuilder , public rest: AuthenticationService , public router: Router) {  }
+constructor(public fb: FormBuilder , public rest: AuthenticationService , public router: Router , public setroute : RouteService ) {  }
 
 userLogin =  this.fb.group({
 
@@ -49,32 +50,13 @@ userLogin =  this.fb.group({
 
       console.log(user);
       if (user.status == 1) {
-        console.log(user.job_title);
+          localStorage.setItem('currentUser', user.auth_token);
+          console.log(localStorage.getItem('currentUser'));
+          this.setroute.setRoute(user['sideManu']);
+          this.router.navigate(['/dashboard']);
+       }
 
-        localStorage.setItem('currentUser', user.auth_token);
-       console.log(localStorage.getItem('currentUser'));
-
-
-        if (user.job_id === 1) {
-          console.log(user.job_id);
-
-          this.router.navigate(['/admin']);
-
-        } else if(user.job_id == 2) {
-          this.router.navigate(['/addCustomer']);
-        } else if(user.job_id == 3){
-          alert(user.job_id);
-          this.router.navigate(['/development']);
-        } else {
-          alert('else');
-        }
-     }
-
-
-
-
-
-    } );
+   } );
 
 
   }
@@ -82,6 +64,8 @@ userLogin =  this.fb.group({
 
   logout() {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('job_title');
+
   }
 
 

@@ -12,6 +12,8 @@ import { TicketComponent } from './ticket/ticket.component';
 
 import { AuthGuard } from './_guards/auth.guard';
 import { AllProposalComponent } from './all-proposal/all-proposal.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AppComponent } from './app.component';
 
 
 
@@ -19,15 +21,17 @@ import { AllProposalComponent } from './all-proposal/all-proposal.component';
 
 
 const routes: Routes = [
-  {path: '' ,  component: SignupComponent, pathMatch: 'full' },
+  {path: '' ,  component: AppComponent, pathMatch: 'full' },
   {path: 'login' , component : LoginComponent },
   {path: 'signup', component: SignupComponent},
+  {path : 'dashboard' , component : DashboardComponent},
   {path: 'admin' , component: AdminComponent , canActivate: [AuthGuard] },
   {path: 'newProposal' , component: NewProposalComponent , canActivate: [AuthGuard] },
   {path: 'addCustomer' , component : AddCustomersComponent , canActivate: [AuthGuard]},
   {path : 'allProposal' , component :  AllProposalComponent , canActivate: [AuthGuard] },
   {path: 'profile' , component: ProfileComponent , canActivate: [AuthGuard] },
   {path: 'ticket' , component: TicketComponent , canActivate: [AuthGuard]},
+
 
 ];
 
