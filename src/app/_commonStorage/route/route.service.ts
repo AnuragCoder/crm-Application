@@ -10,6 +10,7 @@ export class RouteService {
   constructor() { }
 
   getRoute() {
+    console.log(this.router);
    return this.router;
   }
 

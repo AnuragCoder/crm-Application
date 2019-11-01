@@ -26,8 +26,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AllProposalComponent } from './all-proposal/all-proposal.component';
 import { DetailedProposalComponent } from './detailed-proposal/detailed-proposal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProposalComponent } from './proposal/proposal.component';
+import { CustomerComponent } from './customer/customer.component';
+import { MatTableModule } from '@angular/material/table';
 
-
+import {MatInputModule} from '@angular/material';
+import { MatPaginatorModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     SideNavComponent,
     AllProposalComponent,
     DetailedProposalComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProposalComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +63,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     BrowserAnimationsModule,
     MatAutocompleteModule ,
     MatFormFieldModule ,
+    MatTableModule,
+    MatInputModule,
+    MatPaginatorModule
 
 
   ],

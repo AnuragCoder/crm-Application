@@ -15,9 +15,11 @@ import { RouteService } from '../_commonStorage/route/route.service';
 export class LoginComponent implements OnInit {
 
 
+  routeNav : any = [];
 
 
-constructor(public fb: FormBuilder , public rest: AuthenticationService , public router: Router , public setroute : RouteService ) {  }
+
+constructor(public fb: FormBuilder , public rest: AuthenticationService , public nav: Router , public setroute : RouteService ) {  }
 
 userLogin =  this.fb.group({
 
@@ -53,7 +55,16 @@ userLogin =  this.fb.group({
           localStorage.setItem('currentUser', user.auth_token);
           console.log(localStorage.getItem('currentUser'));
           this.setroute.setRoute(user['sideManu']);
-          this.router.navigate(['/dashboard']);
+
+          localStorage.removeItem('menu');
+          this.routeNav  = user['sideManu'];
+          localStorage.setItem('menu', this.routeNav);
+
+
+          let navigate = '/' + this.routeNav[0].sidebar_route;
+          console.log(navigate);
+          this.nav.navigate(['']);
+
        }
 
    } );

@@ -1,5 +1,5 @@
 
-import { Component, ViewChild , AfterViewInit } from '@angular/core';
+import { Component, ViewChild , AfterViewInit, SimpleChanges } from '@angular/core';
 
 import { Router, NavigationStart } from '@angular/router';
 
@@ -22,26 +22,36 @@ export class AppComponent  {
 
 
   constructor(public nav: Router ) {
-    let token = localStorage.getItem('currentUser');
-    console.log(token);
-    // if(token){
-    //   this.nav.navigate(['']);
-    // }
+    this.token = localStorage.getItem('currentUser');
+    // this.tokenChek();
+    console.log(this.token);
+
 
 
     nav.events.forEach((event) => {
       if (event instanceof NavigationStart) {
-
+        this.token = localStorage.getItem('currentUser');
         if (event['url'] == '/login' || event['url'] ==  '/signup' ) {
           localStorage.removeItem('currentUser');
-         } else {
 
-        }
+         }
       }
     });
   }
 
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   this.token = localStorage.getItem('currentUser');
+  //   console.log(changes);
 
+  // }
+
+
+  // tokenChek(){
+  //   if(!this.token){
+  //     console.log(this.token);
+  //     this.nav.navigate(['/login']);
+  //      }
+  // }
 
 
 

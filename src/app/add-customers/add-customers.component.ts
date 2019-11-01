@@ -16,6 +16,7 @@ export class AddCustomersComponent implements OnInit {
  // tslint:disable-next-line:no-output-on-prefix
  @Output() onCustomerAdded: EventEmitter<any> = new EventEmitter<any>();
   constructor(public fb: FormBuilder , public rest: CustomerService) {
+
    }
 
   customerInfo = this.fb.group({

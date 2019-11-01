@@ -14,6 +14,8 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AllProposalComponent } from './all-proposal/all-proposal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppComponent } from './app.component';
+import { ProposalComponent } from './proposal/proposal.component';
+import { CustomerComponent } from './customer/customer.component';
 
 
 
@@ -26,8 +28,8 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path : 'dashboard' , component : DashboardComponent},
   {path: 'admin' , component: AdminComponent , canActivate: [AuthGuard] },
-  {path: 'newProposal' , component: NewProposalComponent , canActivate: [AuthGuard] },
-  {path: 'addCustomer' , component : AddCustomersComponent , canActivate: [AuthGuard]},
+  {path: 'viewProposal' , component: ProposalComponent , canActivate: [AuthGuard] },
+  {path: 'viewCustomer' , component : CustomerComponent , canActivate: [AuthGuard]},
   {path : 'allProposal' , component :  AllProposalComponent , canActivate: [AuthGuard] },
   {path: 'profile' , component: ProfileComponent , canActivate: [AuthGuard] },
   {path: 'ticket' , component: TicketComponent , canActivate: [AuthGuard]},
