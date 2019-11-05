@@ -58,7 +58,11 @@ userLogin =  this.fb.group({
 
           localStorage.removeItem('menu');
           this.routeNav  = user['sideManu'];
-          localStorage.setItem('menu', this.routeNav);
+         // localStorage.setItem('menu', this.routeNav);
+
+          localStorage.removeItem('job_title_id');
+          localStorage.setItem('job_title_id', user['job_title_id']);
+          console.log(localStorage.getItem('job_title_id'));
 
 
           let navigate = '/' + this.routeNav[0].sidebar_route;

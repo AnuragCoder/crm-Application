@@ -15,9 +15,13 @@ table {
 </style>
 
 
-<button mat-button  (click)='addCustmr()'> Add Customer + </button>
+<button mat-button *ngIf='!addCustomer'  (click)='addCustmr()'> Add Customer + </button>
+
+
+
 <div *ngIf='addCustomer'>
 <app-add-customers></app-add-customers>
+<button mat-button (click)='addCustmr()'> Close  </button>
 </div>
 
 <br> <br> <br>

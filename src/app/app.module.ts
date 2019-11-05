@@ -29,9 +29,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProposalComponent } from './proposal/proposal.component';
 import { CustomerComponent } from './customer/customer.component';
 import { MatTableModule } from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import {MatInputModule} from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { MatPaginatorModule } from '@angular/material';
     MatFormFieldModule ,
     MatTableModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCheckboxModule,
+    FormsModule
 
 
   ],

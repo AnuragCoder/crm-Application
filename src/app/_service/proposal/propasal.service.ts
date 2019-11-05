@@ -11,8 +11,9 @@ export class PropasalService {
   addProposals: any =  this.baseUrl + 'addProposals';
   packageType: any = this.baseUrl + 'packageType';
   packageList: any = this.baseUrl + 'packageList';
-  allProposal : any = this.baseUrl + 'getProposalsByAgent';
-
+  allProposal: any = this.baseUrl + 'getProposalsByAgent';
+  getproposalStatus: any = this.baseUrl + 'getProposalStatus';
+  changeProposalStatus: any = this.baseUrl + 'proposalStatusChange';
 
   constructor(private http: HttpClient) { }
 
@@ -45,6 +46,20 @@ export class PropasalService {
     headers = headers.append('Authorization', token);
     const allProposal =  this.http.get<any>(this.allProposal , {headers});
     return allProposal;
+  }
+
+  getProposalStatus(token){
+   let headers = new HttpHeaders();
+   headers = headers.append('Authorization' , token);
+   const proposalStatus = this.http.get<any>(this.getproposalStatus , {headers});
+   return proposalStatus;
+  }
+
+  proposalStatusChange(data , token){
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', token);
+    const changePrposalStatus = this.http.post<any>(this.changeProposalStatus , data  , {headers});
+    return changePrposalStatus;
   }
 
 

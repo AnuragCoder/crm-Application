@@ -26,14 +26,16 @@
 
    <div>
         <H1> Project Details </H1>
+   <div>
+            <span> Customer Name : </span>
+            <input type="text" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" />
+            <datalist id="dynmicUserIds">
+              <select formControlName="customerId">
+              <option *ngFor="let item of userList1" [ngValue]="item.customerId" [value]="item.customerName">{{item.customerName}}</option>
+              </select>
+            </datalist>
+  </div>
 
-
-      <input type="text" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" />
-      <datalist id="dynmicUserIds">
-        <select formControlName="customerId">
-        <option *ngFor="let item of userList1" [ngValue]="item.customerId" [value]="item.customerName">{{item.customerName}}</option>
-        </select>
-      </datalist>
 
 
 
@@ -46,6 +48,7 @@
             </select>
 
       </div>
+
       <div *ngIf='packageList.length > 0'>  <span> package list</span>
         <select formControlName="package_list_id">
               <option *ngFor="let item of packageList" [ngValue]="item.id" >{{item.packageName}}</option>

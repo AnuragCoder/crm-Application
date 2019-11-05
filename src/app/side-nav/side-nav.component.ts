@@ -32,8 +32,12 @@ export class SideNavComponent implements OnInit {
 
 
   getRouteData() {
-    this.route = [
-      {
+    let id : any = localStorage.getItem('job_title_id');
+    console.log(id);
+    if(id == '2') {
+      console.log(id);
+      this.route =
+     [  {
         'id': '1',
         "sidebar_name": "customer",
         'sidebar_route': 'viewCustomer'
@@ -59,6 +63,56 @@ export class SideNavComponent implements OnInit {
         "sidebar_route": "login"
       }
     ]
+  } else if(id == '4') {
+    console.log(id);
+    this.route =
+    [
+      {
+        "id": "8",
+        "sidebar_name": "Dashboard",
+        "sidebar_route": "dashboard"
+      },
+      {
+        "id": "9",
+        "sidebar_name": "Proposal",
+        "sidebar_route": "viewProposal"
+      },
+      {
+        "id": "10",
+        "sidebar_name": "customer",
+        "sidebar_route": "viewCustomer"
+      },
+      {
+        "id": "11",
+        "sidebar_name": "Task",
+        "sidebar_route": "task"
+      },
+      {
+        "id": "12",
+        "sidebar_name": "Lead",
+        "sidebar_route": "lead"
+      },
+      {
+        "id": "13",
+        "sidebar_name": "Ticket",
+        "sidebar_route": "ticket"
+      },
+      {
+        "id": "14",
+        "sidebar_name": "Profile",
+        "sidebar_route": "profile"
+      },
+      {
+        "id": "15",
+        "sidebar_name": "logout",
+        "sidebar_route": "login"
+      }
+    ]
+  } else {
+    alert('hello');
+  }
+
+
 
     this.nav.navigate([this.route[0].sidebar_route]);
     this.selectedItem = this.route[0];

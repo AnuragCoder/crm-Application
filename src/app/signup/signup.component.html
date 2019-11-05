@@ -57,7 +57,7 @@
       </div>
 
     <div>  <span> Job Title </span>
-    <select formControlName='jobTile'>
+    <select formControlName='jobTile' (ngModelChange)='getJobRole($event)'>
             <option *ngFor="let jobsType of JobTitle" [disabled]="jobsType.id == 1" [value]="jobsType.id">
               {{jobsType.job_name}}
             </option>

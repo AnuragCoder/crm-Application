@@ -18,15 +18,15 @@ import { PropasalService } from '../_service/proposal/propasal.service';
 export class NewProposalComponent implements OnInit {
 
   pTypeId: any = [];
-  addCustomer:boolean = false;
+  addCustomer = false;
   addCusromerStatus: any;
   customers: any;
-  userList1 : any = [];
-  lastkeydown1: number = 0;
+  userList1: any = [];
+  lastkeydown1 = 0;
   packageList: any[] = [];
 
 
-  constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer : CustomerService) {  }
+  constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer: CustomerService) {  }
 
   PackageDetails = this.fb.group({
     customerId : [''],
@@ -53,7 +53,7 @@ export class NewProposalComponent implements OnInit {
 
   const token  = localStorage.getItem('currentUser');
   const data = {
-    //this.PackageDetails.get('customerId').value
+    // this.PackageDetails.get('customerId').value
     customerId: 19,
     package_type_id	:	this.PackageDetails.get('packag_type').value,
     package_list_id	:	this.PackageDetails.get('package_list_id').value,
@@ -68,15 +68,22 @@ export class NewProposalComponent implements OnInit {
 
   console.log(data);
 
-   this.rest.newProposals(data , token).subscribe( result => {console.log(result); });
+  this.rest.newProposals(data , token).subscribe( result => {
+    console.log(result);
+    if (result['status'] == 1) {
+      this.PackageDetails.reset();
+      alert('Proposal Added');
+    } else{
+      alert('error occured');
+    }  });
 }
 
  getCustomer() {
   const token  = localStorage.getItem('currentUser');
   this.HttpCustomer.getCustomers(token).subscribe(result => {
     console.log(result);
-    console.log(result['value'].length);
-    this.customers = result['value'];
+    console.log(result.value.length);
+    this.customers = result.value;
   }); }
 
 
@@ -108,7 +115,7 @@ searchFromArray(arr, regex) {
   }
   console.log(matches);
   return matches;
-};
+}
 
 
 
@@ -117,7 +124,7 @@ searchFromArray(arr, regex) {
     console.log(token);
     this.rest.getPack(token).subscribe(result => {console.log(result);
 
-                                                  if (result.status == 1) {
+                                                  if (result.status === 1) {
                                                        this.pTypeId  = result.value;
                                                      }
 
@@ -125,13 +132,13 @@ searchFromArray(arr, regex) {
 
   }
 
-  getpackListName(){
+  getpackListName() {
     const token  = localStorage.getItem('currentUser');
     console.log(token);
-    let value = {'packagetypeId' : this.PackageDetails.get('packag_type').value};
+    const value = {packagetypeId : this.PackageDetails.get('packag_type').value};
     console.log(value);
     this.rest.getpackList( value , token).subscribe(result => {console.log(result);
-                                                               if (result.status == 1) {
+                                                               if (result.status === 1) {
       this.packageList  = result.value;
       }
 
@@ -139,10 +146,10 @@ searchFromArray(arr, regex) {
   }
 
 
-  onCustomerAdd(value){
+  onCustomerAdd(value) {
     console.log(value);
-    if(value['status'] == 1){
-      this.addCusromerStatus  = value['message'];
+    if (value.status === 1) {
+      this.addCusromerStatus  = value.message;
 
       this.addCustomer = false;
 
@@ -151,8 +158,8 @@ searchFromArray(arr, regex) {
 
   addCustomerField() {
     console.log(!this.addCustomer);
-     this.addCustomer = !(this.addCustomer);
-     console.log(this.addCustomer);
+    this.addCustomer = !(this.addCustomer);
+    console.log(this.addCustomer);
   }
 
 

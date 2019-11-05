@@ -18,6 +18,7 @@ export class SignupService {
  checkuserName: any = this.baseUrl + 'userNameCheck';
  checkPhoneNoClone: any = this.baseUrl + 'userPhoneNumberCheck';
  checkEamil: any = this.baseUrl + 'userEmailCheck';
+ usersByJobRole: any = this.baseUrl + 'usersByJobRole';
 
 
 
@@ -41,9 +42,9 @@ export class SignupService {
      console.log(data);
      let headers = new HttpHeaders();
 
-    headers = headers.append('Content-Type', 'application/json; charset=utf-8');
+     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
     headers = headers.append('Accept' , 'application/json');
-    let httpOptions = {
+     let httpOptions = {
       headers: new HttpHeaders({
               'Content-Type': 'application/json',
               'Accept': 'application/json',
@@ -57,6 +58,17 @@ export class SignupService {
 
    country() : Observable<any>{
      return this.http.get(this.countryCode)
+   }
+
+   getJobRole(data , token){
+     //let headers = new HttpHeaders();
+   //  headers = headers.append('Authorization' , token);
+     //console.log(headers);
+     const JobRole = this.http.post(this.usersByJobRole , data );
+     JobRole.subscribe(result => {
+       console.log(result)
+     })
+     return JobRole;
    }
 
 

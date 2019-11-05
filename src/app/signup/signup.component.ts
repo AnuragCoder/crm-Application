@@ -78,20 +78,26 @@ export class SignupComponent implements OnInit {
         console.log(this.JobTitle);
 
 
-        // let joblist
-        // joblist = result['value'];
-        // for(let i = 0 ; i < joblist.length ; i++ ){
-        //   console.log(i);
-        //   console.log(joblist[i].job_name);
-        //   this.JobTitle.push(joblist[i].job_name);
-        // }
-        //  console.log(this.JobTitle);
       }
        },
     err => {
       console.log(err);
     })
   }
+
+getJobRole(value){
+  let token = localStorage.getItem('currentUser');
+
+  let data  = {
+    jobRoleId	:	value
+  }
+  console.log(data);
+  this.res.getJobRole(data , token).subscribe(result => {
+    console.log(result);
+  })
+}
+
+
 
   checkPass(value){
      if (this.userSignup.value.password) {
@@ -133,7 +139,7 @@ export class SignupComponent implements OnInit {
   submitt(){
     console.log(this.userSignup.value.jobTile);
     console.log(this.userSignup.value);
-  let data =   {
+    let data =   {
   name : this.userSignup.value.name,
 	username : this.userSignup.value.username,
 	password : this.userSignup.value.password,
