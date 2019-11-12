@@ -13,7 +13,7 @@ export class AllProposalComponent implements OnInit {
 
   ngOnInit() {
     let token = localStorage.getItem('currentUser');
-    this.rest.getProposal(token).subscribe(result => { console.log(result);} );
+    // this.rest.getProposal(token).subscribe(result => { console.log(result);} );
   }
 
 }

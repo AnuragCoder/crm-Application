@@ -18,7 +18,7 @@ export class SignupService {
  checkuserName: any = this.baseUrl + 'userNameCheck';
  checkPhoneNoClone: any = this.baseUrl + 'userPhoneNumberCheck';
  checkEamil: any = this.baseUrl + 'userEmailCheck';
- usersByJobRole: any = this.baseUrl + 'usersByJobRole';
+ usersByJobRole: any = this.baseUrl + 'jobRole';
 
 
 
@@ -64,6 +64,7 @@ export class SignupService {
      //let headers = new HttpHeaders();
    //  headers = headers.append('Authorization' , token);
      //console.log(headers);
+     console.log(data);
      const JobRole = this.http.post(this.usersByJobRole , data );
      JobRole.subscribe(result => {
        console.log(result)

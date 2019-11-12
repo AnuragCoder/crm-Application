@@ -3,16 +3,22 @@
   div {
     margin-top: 6%;
   }
+
+  .textArea {
+  width: 400px;
+  height: 200px;
+  border: 1px solid #555;
+  overflow: auto;
+}
+
+span {
+  font-weight: bold;
+}
+
+.block-inline {
+  display: inline-block;
+}
  </style>
-<!-- {
-	"customerId"		:	"6",
-	"package_type_id"	:	"2",
-	"package_list_id"	:	"3",
-	"proposal_details"	:	"Business Analysis.Keyword Analysis.",
-	"signup_amount"		:	"$120",
-	"total_package_fee"	:	"$20",
-	"full_package"		:	"$80"
-} -->
 
 
 <!-- <button (click)='addCustomerField()'> Add Customers+ </button>
@@ -31,42 +37,175 @@
             <input type="text" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" />
             <datalist id="dynmicUserIds">
               <select formControlName="customerId">
-              <option *ngFor="let item of userList1" [ngValue]="item.customerId" [value]="item.customerName">{{item.customerName}}</option>
+              <option *ngFor="let item of userList1"  [value]="item.customerName">{{item.customerName}}</option>
               </select>
             </datalist>
+  </div>
+
+  <div>
+    <span> Business Name </span>
+    <input type='text' formControlName="BusinessName">
   </div>
 
 
 
 
+   <div>
+            <span> Proposal Details </span>
+            <ckeditor formControlName="proposal_details" value='data' [editor]="Editor" data=""></ckeditor>
+  </div>
 
+  <div>
+    <h2><span> Package INFO </span></h2>
 
-      <div>  <span> packag type </span>
-        <select formControlName="packag_type" (change)='getpackListName()'>
-            <!-- <option [ngValue]='null' disabled>  Select </option> -->
-            <option *ngFor="let item of pTypeId" [ngValue]="item.package_id" >{{item.package_name}}</option>
-            </select>
+        <div class='block-inline'>  <span> packag type </span>
+          <select formControlName="packag_type" (change)='getpackListName()'>
+
+              <option *ngFor="let item of pTypeId" [ngValue]="item.package_id" >{{item.package_name}}</option>
+              </select>
 
       </div>
 
-      <div *ngIf='packageList.length > 0'>  <span> package list</span>
-        <select formControlName="package_list_id">
-              <option *ngFor="let item of packageList" [ngValue]="item.id" >{{item.packageName}}</option>
-        </select>
+      <div *ngIf='PackageDetails.get("packag_type").value' class='block-inline'>
+              <span> package list</span>
+              <select formControlName="package_list_id" (change)='getPackageDetails()'>
+                    <option *ngFor="let item of packageList" [ngValue]="item" >{{item.packageName}}</option>
+              </select>
       </div>
 
-      <div>  <span> Proposal Details </span> <input type='textarea' formControlName="proposal_details"></div>
+      <div class='block-inline' class='block-inline' *ngIf='manulaPayBox'>
+      <select>
+      <option value='item' *ngFor="let item of currency" > {{item}} </option>
+      </select>
+      <input type='text' formControlName="signUpAmount" appOnlyNumber="true">
+      </div>
 
-      <div>  <span> SignUp Amount</span> <input type='text' formControlName="signUpAmount" appOnlyNumber="true"></div>
-     <div>  <span> Total Package Fee</span> <input type='text' formControlName="totalPackageFee" appOnlyNumber="true">  </div>
-     <div>  <span> Full Package</span> <input type='text' formControlName="full_package" appOnlyNumber="true">  </div>
+    <div *ngIf='PackageDetails.get("package_list_id").value' class='block-inline'>
+          <mat-checkbox class="example-margin" [labelPosition]="labelPosition" (change)='paymentManual($event)'>
+          {{texttoaddPayemt}}
+          </mat-checkbox>
+    </div>
 
 
 
 
+</div>
+<div [innerHTML]='content'> </div>
+
+<button (click)='addContent()'> Add </button>
+
+<!-- <div>
+    <h2><span> Package INFO </span></h2>
+    <div *ngFor="let pType of pTypeId">
+      <span> {{pType.package_name}} </span>
+
+      <section class="example-section" *ngFor="let item of packageList">
+          <label class="example-margin">Package List:</label>
+          <mat-radio-group [(ngModel)]="labelPosition">
+            <mat-radio-button class="example-margin" value="after">After</mat-radio-button>
+            <mat-radio-button class="example-margin" value="before">Before</mat-radio-button>
+          </mat-radio-group>
+        </section>
+
+
+
+    </div>
+
+</div> -->
+
+
+
+
+
+<div>
+  <h2><span> BUDGET INFO </span></h2>
+ <div>
+         <span> SignUp Amount</span>
+             <select formControlName='signUpAmount_cur' >
+                     <option value='item' *ngFor="let item of currency" > {{item}} </option>
+                   </select>
+                   <input type='text' formControlName="signUpAmount" appOnlyNumber="true">
+  </div>
+
+  <div>
+     <span> Full Package</span>
+     <select formControlName='full_package_cur'>
+         <option value='item' *ngFor="let item of currency" > {{item}} </option>
+       </select>
+     <input type='text' formControlName="full_package" appOnlyNumber="true">
+</div>
+
+ <div>
+         <span> Total Package Fee</span>
+          <select formControlName='totalPackageFee_cur'>
+           <option value='item' *ngFor="let item of currency" > {{item}} </option>
+         </select>
+         <input type='text' formControlName="totalPackageFee" appOnlyNumber="true">
+ </div>
+
+
+
+
+<!-- <section class="example-section">
+   <mat-checkbox class="example-margin"   (change)='checkboxBuget($event)' [labelPosition]="labelPosition">
+      {{checkBoxDisplayBuget}}
+   </mat-checkbox>
+ </section> -->
+
+</div>
+
+
+  <div>
+      <h2> <span> Duration : </span> </h2>
+          <div>
+              <span> Start Date </span>
+              <mat-form-field>
+                  <input matInput formControlName='StartDate' [matDatepicker]="From" placeholder="Choose a date">
+                  <mat-datepicker-toggle matSuffix [for]="From"></mat-datepicker-toggle>
+                  <mat-datepicker #From></mat-datepicker>
+                </mat-form-field>
+          </div>
+
+          <div *ngIf='DisplayEndDATE' >
+            <span> Deadline </span>
+            <mat-form-field>
+                <input matInput formControlName='endDate' [matDatepicker]="to" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+                <mat-datepicker #to></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <section class="example-section">
+                <mat-checkbox class="example-margin"   (change)='checkboxDuration($event)' [labelPosition]="labelPosition">
+                   {{checkBoxDisplayDate}}
+                </mat-checkbox>
+              </section>
+  </div>
+
+
+
+<div>
+  <H2><span> File Upload  </span></H2>
+
+  <div class="form-group">
+      <label for="file">Choose File</label>
+      <input type="file"
+             id="file"
+             (change)="handleFileInput($event.target.files)">
+  </div>
+
+</div>
+
+
+
+
+   <div>
    <input type='submit' value='submit'>
-
    </div>
+
+
+
+  </div>
 
 
   </form>

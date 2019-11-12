@@ -54,7 +54,10 @@ export class ProposalComponent implements OnInit {
   getProposal(){
     // tslint:disable-next-line:prefer-const
     let token = localStorage.getItem('currentUser');
-    this.rest.getProposal(token).subscribe(result => {
+    let data  ={
+      "proposalStatus"	:	"1"
+    }
+    this.rest.getProposal(data , token).subscribe(result => {
        console.log(result)
        if(result['status'] == 1){
          console.log(result['value']);

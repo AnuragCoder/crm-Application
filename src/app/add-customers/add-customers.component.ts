@@ -67,7 +67,7 @@ export class AddCustomersComponent implements OnInit {
         this.customerInfo.reset();
         // this.customerInfo.markAsUntouched();
         // this.customerInfo.reset(this.customerInfo.value);
-
+        this.country_code = '';
         alert(result['message']);
 
       } else {

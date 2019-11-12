@@ -69,9 +69,10 @@ userLogin =  this.fb.group({
           console.log(navigate);
           this.nav.navigate(['']);
 
-       }
+       } else {
+          alert(user.message);
 
-   } );
+   }  } );
 
 
   }

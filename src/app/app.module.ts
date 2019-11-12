@@ -30,10 +30,13 @@ import { ProposalComponent } from './proposal/proposal.component';
 import { CustomerComponent } from './customer/customer.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {MatInputModule} from '@angular/material';
+import {  MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 @NgModule({
   declarations: [
@@ -69,7 +72,12 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    NoopAnimationsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    CKEditorModule,
+
 
 
   ],

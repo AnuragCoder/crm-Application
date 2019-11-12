@@ -30,7 +30,7 @@ export class PropasalService {
     headers = headers.append('Content-Type', 'application/json; charset=utf-8');
     headers = headers.append('Authorization', token);
 
-    return this.http.post<any>(this.packageList ,  value , {headers});
+    return this.http.post<any>(this.packageList ,  value , {headers})
 }
 
 
@@ -41,10 +41,10 @@ export class PropasalService {
    return this.http.post<any>(this.addProposals , value , {headers});
   }
 
-  getProposal(token) {
+  getProposal( data , token) {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', token);
-    const allProposal =  this.http.get<any>(this.allProposal , {headers});
+    const allProposal =  this.http.post<any>(this.allProposal , data , {headers});
     return allProposal;
   }
 

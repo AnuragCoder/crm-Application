@@ -22,6 +22,7 @@ export class AppComponent  {
 
 
   constructor(public nav: Router ) {
+
     this.token = localStorage.getItem('currentUser');
     // this.tokenChek();
     console.log(this.token);

@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
  userNameCheck : boolean = false;
  PhoneDublicacyStaus: any;
  emailDuplicacy: any;
+ JobRole : any;
 
   userSignup = this.fb.group({
     name: ['' , Validators.required  ],
@@ -89,26 +90,31 @@ getJobRole(value){
   let token = localStorage.getItem('currentUser');
 
   let data  = {
-    jobRoleId	:	value
+    jobTitleId	:	value
   }
   console.log(data);
   this.res.getJobRole(data , token).subscribe(result => {
     console.log(result);
+    if(result['status'] == 1){
+      this.JobRole = result['value'];
+      console.log(this.JobRole);
+    }
   })
 }
 
 
 
-  checkPass(value){
-     if (this.userSignup.value.password) {
-     if (this.userSignup.value.password === value) {
+  checkPass(){
+
+
+    if (this.userSignup.get('password').value === this.userSignup.get('confirmPass').value) {
 
        this.passWorCheck = true;
 
-    }else{
+    } else {
       this.passWorCheck = false;
      }
-    }
+
    }
 
   setCountryCode(value){
