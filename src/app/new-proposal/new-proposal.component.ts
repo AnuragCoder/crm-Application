@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,  Output, Input, EventEmitter, HostBinding, HostListener } from '@angular/core';
 
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { CustomerService } from '../_service/customer/customer.service';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
@@ -26,7 +26,7 @@ export class NewProposalComponent implements OnInit {
   userList1: any = [];
   lastkeydown1 = 0;
   packageList: any[] = [];
-  currency: any[] = ['INR', 'USD', 'GBP', 'EUR'];
+ // currency: any[] = ['INR', 'USD', 'GBP', 'EUR'];
   manulaPayBox: boolean = false;
 
   // for checkbox
@@ -42,42 +42,60 @@ export class NewProposalComponent implements OnInit {
   paymentPackageDetails: any =  [] ;
   texttoaddPayemt = 'Chek to add payment manually';
   content : any;
+  checkBoxforADDINGbudgetmanually: any = 'Check to add custom payment for full package';
+  cbforPaymanually : boolean = false;
+  currency : any  = [];
+  cbByHour : any = 'Check if client wants to add duration by hour';
+  DisplaybyDate : boolean = true;
+  files: any = [];
+  array : any = ['1'];
+ // PackageDetails : FormGroup;
+ PackageDetails = this.fb.group({
+  customerId : [''],
+  BusinessName : [''],
+  proposal_details : [''],
+  Package_budget : this.fb.array([this.addPayment()]),
+  StartDate : [''],
+  endDate : [''],
+  // packageDetails : [''],
+  signUpAmount: [''],
+  signUpAmount_cur : [''],
+  totalPackageFee : [''],
+  totalPackageFee_cur : [''],
+  full_package : [''],
+  full_package_cur : [''],
+
+});
 
 
-  constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer: CustomerService) {  }
+  constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer: CustomerService) {
 
-  PackageDetails = this.fb.group({
-    customerId : [''],
-    BusinessName : [''],
-    packag_type : [''],
-    package_list_id : [''],
-    proposal_details : [''],
-    StartDate : [''],
-    endDate : [''],
-    packageDetails : [''],
-    signUpAmount: [''],
-    signUpAmount_cur : [''],
-    totalPackageFee : [''],
-    totalPackageFee_cur : [''],
-    full_package : [''],
-    full_package_cur : [''],
+   }
 
- });
-
-
-
-  ngOnInit() {
-
+   ngOnInit() {
     this.getPackageType();
     this.getCustomer();
- }
+    this.getCurrency();
+    }
 
- handleFileInput(files: FileList) {
-   console.log(files);
-  this.fileToUpload = files.item(0);
-  console.log(this.fileToUpload);
+
+ addPayment(): FormGroup {
+
+  return this.fb.group({
+    packag_type : [''],
+    package_list_id : [''],
+    custumCosting : [''],
+    checktoaddPayemt : ['']
+  });
 }
 
+add(): void {
+  console.log((<FormArray>this.PackageDetails.get('Package_budget')));
+  (<FormArray>this.PackageDetails.get('Package_budget')).push(this.addPayment());
+  // this.array.push(this.array.length + 1);
+  // console.log(this.array);
+  console.log((<FormArray>this.PackageDetails.get('Package_budget')));
+}
 
 
 
@@ -109,9 +127,29 @@ export class NewProposalComponent implements OnInit {
 
    }
 
+ //Get Customer By Id
+  getUserIdsFirstWay($event) {
+  console.log($event);
+  console.log($event.target.value);
+  const userId = (document.getElementById('userIdFirstWay') as HTMLInputElement).value;
+
+  this.userList1 = [];
+
+  if (userId.length > 2) {
+   if ($event.timeStamp - this.lastkeydown1 > 200) {
+     this.userList1 = this.searchFromArray(this.customers, userId);
 
 
- getCustomer() {
+     for(let i = 0 ; i < this.userList1.length ; i++){
+       this.customerId = this.userList1[0].customerId;
+     }
+     console.log(this.customerId);
+
+   }
+ }
+}
+
+getCustomer() {
   const token  = localStorage.getItem('currentUser');
   this.HttpCustomer.getCustomers(token).subscribe(result => {
     console.log(result);
@@ -119,7 +157,109 @@ export class NewProposalComponent implements OnInit {
     this.customers = result.value;
   }); }
 
+  searchFromArray(arr, regex) {
+    // http://www.mukeshkumar.net/articles/angular/3-ways-to-implement-autocomplete-textbox-in-angular-with-typescript-on-large-data
+   // tslint:disable-next-line:prefer-const
+   // tslint:disable-next-line:one-variable-per-declaration
+   let matches = [], i;
+   for (i = 0; i < arr.length; i++) {
+     if (arr[i].customerName.match(regex)) {
+       matches.push(arr[i]);
+     }
+   }
+   console.log(matches);
+   return matches;
+ }
 
+
+
+
+
+//Get Customer By Id Ends
+
+
+
+//Paymant And Packages
+
+
+
+
+getPackageType() {
+  const token  = localStorage.getItem('currentUser');
+  console.log(token);
+  this.rest.getPack(token).subscribe(result => {
+    console.log(result);
+    if (result.status === "1") {
+
+          this.pTypeId  = result.value;
+          console.log(this.pTypeId);
+        }
+  });
+}
+
+getpackListName() {
+  const token  = localStorage.getItem('currentUser');
+  console.log(this.PackageDetails.get('packag_type'));
+  const value = {packagetypeId : this.PackageDetails.get('packag_type').value};
+  console.log(value);
+  if(value){
+  this.rest.getpackList( value , token).subscribe(result => {
+    console.log(result);
+    if (result.status === '1') {
+    this.packageList  = result.value;
+    }
+ });
+}
+}
+
+getPackageDetails(value) {
+  const packageList = this.PackageDetails.get('package_list_id').value;
+  console.log(packageList);
+  this.paymentPackageDetails.push([packageList.id , packageList.packageBudget , value ]);
+  console.log(this.paymentPackageDetails);
+}
+
+paymentManual(value) {
+console.log(value);
+if (value.checked) {
+  this.manulaPayBox = true;
+  this.getPackageDetails(1);
+  this.texttoaddPayemt = 'Uncheck to add Auto Payment';
+} else if (!(value.checked)) {
+  this.getPackageDetails(0);
+  this.manulaPayBox = false;
+  this.texttoaddPayemt = 'check to add Payment manually';
+}
+}
+
+
+
+checkboxforFullPackage(value) {
+
+  console.log(value);
+  if (value.checked) {
+    console.log('Checked >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+         this.cbforPaymanually = true;
+         this.checkBoxforADDINGbudgetmanually = 'uncheck to add payment indivisually';
+
+       } else {
+         console.log('Unchecked >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        this.cbforPaymanually = false;
+        this.checkBoxforADDINGbudgetmanually = 'Check to add custom payment for full package';
+
+       }
+
+}
+
+//Package and Paymwnts Ends
+
+
+
+
+
+
+
+//Time Duration of Project
 
   checkboxDuration(value) {
        console.log(value);
@@ -130,109 +270,34 @@ export class NewProposalComponent implements OnInit {
        } else {
         this.DisplayEndDATE = true;
         this.checkBoxDisplayDate = 'Check If no deadline required';
+         } }
 
-       }
-
-  }
-
-
-  checkboxBuget(value){
-
-  }
-
-
-
- getUserIdsFirstWay($event) {
-   console.log($event);
-   console.log($event.target.value);
-   const userId = (document.getElementById('userIdFirstWay') as HTMLInputElement).value;
-
-   this.userList1 = [];
-
-   if (userId.length > 2) {
-    if ($event.timeStamp - this.lastkeydown1 > 200) {
-      this.userList1 = this.searchFromArray(this.customers, userId);
-
-
-      for(let i = 0 ; i < this.userList1.length ; i++){
-        this.customerId = this.userList1[0].customerId;
-      }
-      console.log(this.customerId);
-
-    }
-  }
-}
-
-searchFromArray(arr, regex) {
-   // http://www.mukeshkumar.net/articles/angular/3-ways-to-implement-autocomplete-textbox-in-angular-with-typescript-on-large-data
-  // tslint:disable-next-line:prefer-const
-  // tslint:disable-next-line:one-variable-per-declaration
-  let matches = [], i;
-  for (i = 0; i < arr.length; i++) {
-    if (arr[i].customerName.match(regex)) {
-      matches.push(arr[i]);
-    }
-  }
-  console.log(matches);
-  return matches;
-}
-
-
-
-  getPackageType() {
-    const token  = localStorage.getItem('currentUser');
-    console.log(token);
-    this.rest.getPack(token).subscribe(result => {
-      console.log(result.value);
-
-      if (result.status === "1") {
-            this.pTypeId  = result.value;
-            this.getpackListName();
-          }
-
-    });
-
-  }
-
-  getpackListName() {
-
-    const token  = localStorage.getItem('currentUser');
-    console.log(this.PackageDetails.get('packag_type'));
-
-    const value = {packagetypeId : this.PackageDetails.get('packag_type').value};
+  CheckBoxByHour(value){
     console.log(value);
-    this.rest.getpackList( value , token).subscribe(result => {
-      console.log(result);
-      if (result.status === '1') {
-      this.packageList  = result.value;
-      }
+    if (value.checked) {
+      this.DisplaybyDate = false;
+      this.cbByHour = 'uncheck if client wants to add duration by Date';
 
-    });
+    } else {
+     this.DisplaybyDate = true;
+     this.cbByHour = 'Check if client wants to add duration by hour';
+       }}
+
+  //Time Duration of Project ends
+
+
+// file Upload
+uploadFile(event) {
+  for (let index = 0; index < event.length; index++) {
+    const element = event[index];
+    this.files.push(element.name)
   }
-
-  getPackageDetails(value) {
-    const packageList = this.PackageDetails.get('package_list_id').value;
-    console.log(packageList);
-    this.paymentPackageDetails.push([packageList.id , packageList.packageBudget , value ]);
-    console.log(this.paymentPackageDetails);
-  }
-
-paymentManual(value) {
-  console.log(value);
-  if (value.checked) {
-    this.manulaPayBox = true;
-    this.getPackageDetails(1);
-    this.texttoaddPayemt = 'Uncheck to add Auto Payment';
-  } else if (!(value.checked)) {
-    this.getPackageDetails(0);
-    this.manulaPayBox = false;
-    this.texttoaddPayemt = 'check to add Payment manually';
-  }
-
-
-
+}
+deleteAttachment(index) {
+  this.files.splice(index, 1)
 }
 
+//FileUpload Ends
 
 
 
@@ -257,11 +322,36 @@ paymentManual(value) {
   }
 
 
+  //File   ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+        let file: File = fileList[0];
+        let formData:FormData = new FormData();
+        formData.append('uploadFile', file, file.name);
+        let headers = new Headers();
+        /** In Angular , including the header Content-Type can invalidate your request */
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        // let options = new RequestOptions({ headers: headers });
+        // this.http.post(`${this.apiEndPoint}`, formData, options)
+        //     .map(res => res.json())
+        //     .catch(error => Observable.throw(error))
+        //     .subscribe(
+        //         data => console.log('success'),
+        //         error => console.log(error)
+        //     )
+    }
+}
+
+
 
 
 
   addContent(){
-    this.content += `<div>
+    this.content += `
+    <ng-container>
+    <div>
     <h2><span> Package INFO </span></h2>
 
         <div class='block-inline'>  <span> packag type </span>
@@ -291,14 +381,25 @@ paymentManual(value) {
           {{texttoaddPayemt}}
           </mat-checkbox>
     </div>
-
-
-
-
-</div>`;
+   </div>
+   </ng-container>
+   `;
   }
 
 
+  getCurrency(){
+    this.rest.getProjectCurrency().subscribe(result =>
+
+      {
+        console.log(result);
+        if(result.status == 1){
+          for(let i = 0 ; i < result['value'].length ; i++) {
+              this.currency.push(result['value'][i].code);
+          }
+        }
+        console.log(this.currency);
+      });
+  }
 
 
 

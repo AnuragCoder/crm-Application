@@ -36,6 +36,7 @@ import {  MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FileUploadDirective } from './_directive/fileUpload/file-upload.directive';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DetailedProposalComponent,
     DashboardComponent,
     ProposalComponent,
-    CustomerComponent
+    CustomerComponent,
+    FileUploadDirective
   ],
   imports: [
     BrowserModule,

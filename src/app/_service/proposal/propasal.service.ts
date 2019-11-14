@@ -14,6 +14,7 @@ export class PropasalService {
   allProposal: any = this.baseUrl + 'getProposalsByAgent';
   getproposalStatus: any = this.baseUrl + 'getProposalStatus';
   changeProposalStatus: any = this.baseUrl + 'proposalStatusChange';
+  ProjectCurrency: any = this.baseUrl + 'getProjectCurrency';
 
   constructor(private http: HttpClient) { }
 
@@ -60,6 +61,10 @@ export class PropasalService {
     headers = headers.append('Authorization', token);
     const changePrposalStatus = this.http.post<any>(this.changeProposalStatus , data  , {headers});
     return changePrposalStatus;
+  }
+
+  getProjectCurrency(){
+    return this.http.get<any>(this.ProjectCurrency);
   }
 
 
