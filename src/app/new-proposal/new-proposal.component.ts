@@ -7,10 +7,6 @@ import {startWith, map} from 'rxjs/operators';
 import { PropasalService } from '../_service/proposal/propasal.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-
-
-
-
 @Component({
   selector: 'app-new-proposal',
   templateUrl: './new-proposal.component.html',
@@ -34,43 +30,48 @@ export class NewProposalComponent implements OnInit {
   indeterminate = false;
   labelPosition = 'after';
   disabled = false;
-  DisplayEndDATE: Boolean = true;
+  DisplayEndDATE: boolean = true;
   checkBoxDisplayDate: any = 'Check If no deadline required';
-  checkBoxDisplayBuget : any = ''
+  checkBoxDisplayBuget: any = '';
 
   fileToUpload: File = null;
   paymentPackageDetails: any =  [] ;
   texttoaddPayemt = 'Chek to add payment manually';
-  content : any;
+  content: any;
   checkBoxforADDINGbudgetmanually: any = 'Check to add custom payment for full package';
-  cbforPaymanually : boolean = false;
-  currency : any  = [];
-  cbByHour : any = 'Check if client wants to add duration by hour';
-  DisplaybyDate : boolean = true;
+  cbforPaymanually: boolean = false;
+  currency: any  = [];
+  cbByHour: any = 'Check if client wants to add duration by hour';
+  DisplaybyDate: boolean = true;
   files: any = [];
-  array : any = ['1'];
- // PackageDetails : FormGroup;
- PackageDetails = this.fb.group({
-  customerId : [''],
-  BusinessName : [''],
-  proposal_details : [''],
-  Package_budget : this.fb.array([this.addPayment()]),
-  StartDate : [''],
-  endDate : [''],
-  // packageDetails : [''],
-  signUpAmount: [''],
-  signUpAmount_cur : [''],
-  totalPackageFee : [''],
-  totalPackageFee_cur : [''],
-  full_package : [''],
-  full_package_cur : [''],
-
-});
+  array: any = ['1'];
+  PackageDetails: FormGroup;
+ 
+ 
 
 
   constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer: CustomerService) {
 
-   }
+    this.PackageDetails = this.fb.group({
+      customerId : [''],
+      BusinessName : [''],
+      proposal_details : [''],
+      Package_budget : this.fb.array([this.addPayment()]),
+      StartDate : [''],
+      endDate : [''],
+      // packageDetails : [''],
+      signUpAmount: [''],
+      signUpAmount_cur : [''],
+      totalPackageFee : [''],
+      totalPackageFee_cur : [''],
+      full_package : [''],
+      full_package_cur : [''],
+    
+    });
+  
+  
+  
+  }
 
    ngOnInit() {
     this.getPackageType();
@@ -90,11 +91,40 @@ export class NewProposalComponent implements OnInit {
 }
 
 add(): void {
+  console.log(this.PackageDetails.get('Package_budget')['controls']);
   console.log((<FormArray>this.PackageDetails.get('Package_budget')));
   (<FormArray>this.PackageDetails.get('Package_budget')).push(this.addPayment());
-  // this.array.push(this.array.length + 1);
-  // console.log(this.array);
-  console.log((<FormArray>this.PackageDetails.get('Package_budget')));
+
+}
+
+getPackageType() {
+  const token  = localStorage.getItem('currentUser');
+  console.log(token);
+  this.rest.getPack(token).subscribe(result => {
+    console.log(result);
+    if (result.status === "1") {
+
+          this.pTypeId  = result.value;
+          console.log(this.pTypeId);
+          console.log('hello');
+        }
+  });
+}
+
+getpackListName() {
+  const token  = localStorage.getItem('currentUser');
+  // const packageList = this.PackageDetails.value['Package_budget'];
+  // console.log(this.PackageDetails);
+  const value = {packagetypeId : this.PackageDetails.value.Package_budget[0].packag_type};
+  console.log(this.PackageDetails.value.Package_budget[0].packag_type);
+  if (value) {
+  this.rest.getpackList( value , token).subscribe(result => {
+    console.log(result);
+    if (result.status === '1') {
+    this.packageList  = result.value;
+    }
+ });
+}
 }
 
 
@@ -184,39 +214,15 @@ getCustomer() {
 
 
 
-getPackageType() {
-  const token  = localStorage.getItem('currentUser');
-  console.log(token);
-  this.rest.getPack(token).subscribe(result => {
-    console.log(result);
-    if (result.status === "1") {
 
-          this.pTypeId  = result.value;
-          console.log(this.pTypeId);
-        }
-  });
-}
 
-getpackListName() {
-  const token  = localStorage.getItem('currentUser');
-  console.log(this.PackageDetails.get('packag_type'));
-  const value = {packagetypeId : this.PackageDetails.get('packag_type').value};
-  console.log(value);
-  if(value){
-  this.rest.getpackList( value , token).subscribe(result => {
-    console.log(result);
-    if (result.status === '1') {
-    this.packageList  = result.value;
-    }
- });
-}
-}
 
 getPackageDetails(value) {
-  const packageList = this.PackageDetails.get('package_list_id').value;
-  console.log(packageList);
-  this.paymentPackageDetails.push([packageList.id , packageList.packageBudget , value ]);
-  console.log(this.paymentPackageDetails);
+  console.log(value);
+  // const packageList = this.PackageDetails.value['Package_budget'];
+  // console.log(packageList);
+  // this.paymentPackageDetails.push([packageList.id , packageList.packageBudget , value ]);
+  // console.log(this.paymentPackageDetails);
 }
 
 paymentManual(value) {
