@@ -171,7 +171,7 @@
       </div>
 
 
-      <ng-template #DisplaybyTime><input type='text'><label>hr</label></ng-template>
+      <ng-template #DisplaybyTime><input formControlName="project_hours" type='text'><label>hr</label></ng-template>
 
       <section class="example-section">
         <mat-checkbox class="example-margin" (change)='CheckBoxByHour($event)' [labelPosition]="CheckBoxByHour">

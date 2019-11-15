@@ -60,14 +60,15 @@ export class NewProposalComponent implements OnInit {
       Package_budget : this.fb.array([this.addPayment()]),
       StartDate : [''],
       endDate : [''],
-      // packageDetails : [''],
+      project_hours : [''],
       signUpAmount: [''],
       signUpAmount_cur : [''],
       totalPackageFee : [''],
       totalPackageFee_cur : [''],
       full_package : [''],
       full_package_cur : [''],
-
+      technology_used : [''],
+      attach_file : [''],
     });
 
 
@@ -190,6 +191,23 @@ checkboxforFullPackage(value) {
 }
 
 
+// customerId  :  2
+// proposal_details  :  fhdfhjdfhjd
+// businessName  :   heltyddusyd
+// package_type_id  :  send ids as an array
+// package_list_id    :  send  ids as an array
+// budget                :  send budget amount as an array
+// is_manual            :  send is manual or not as an array
+// full_package         :  send your full package
+// currency_code       : INR
+// signup_amount      :  2000
+// start_date       :    2019-11-14 09:09:09(send this date as this format exactly)
+// end_date     :       2019-11-14 09:09:09(send this date as this format exactly)
+// project_hours      :    12       // if project hrs is send then end date should be blank
+// technology_used     :     PHP
+// attach_file     :    you can also upload multiple files(send as an array)
+
+
 
  onSubmit() {
   let ProjectendDate;
@@ -205,14 +223,19 @@ checkboxforFullPackage(value) {
   const data = {
 
     customerId: this.customerId,
-    package_type_id	:	this.PackageDetails.get('packag_type').value,
-    package_list_id	:	this.PackageDetails.get('package_list_id').value,
-    proposal_details	: this.PackageDetails.get('proposal_details').value,
+    proposal_details   : this.PackageDetails.get('proposal_details').value,
+    businessName : this.PackageDetails.get('BusinessName').value,
+    package_type_id	:	this.PackageArray,
+    package_list_id	:	this.PacageListArray,
+    budget : this.customPayArr,
+    is_manual : this.CheckAutoPayArr,
+    full_package : 	this.PackageDetails.get('totalPackageFee_cur').value + ' ' + this.PackageDetails.get('totalPackageFee').value,
+    signUpAmount	:	this.PackageDetails.get('signUpAmount_cur').value +' ' +this.PackageDetails.get('signUpAmount').value,
     StartDate	: this.PackageDetails.get('StartDate').value,
     endDate	: ProjectendDate,
-    signUpAmount	:	this.PackageDetails.get('signUpAmount_cur').value +' ' +this.PackageDetails.get('signUpAmount').value,
-    totalPackageFee	:	this.PackageDetails.get('totalPackageFee_cur').value + ' ' + this.PackageDetails.get('totalPackageFee').value,
-    fullPackage	:	this.PackageDetails.get('full_package_cur').value + ' '+this.PackageDetails.get('full_package').value,
+    project_hours : this.PackageDetails.get('project_hours').value,
+    technology_used : this.PackageDetails.get('technology_used').value,
+    attach_file : this.PackageDetails.get('attach_file').value
     };
 
      console.log(data);
