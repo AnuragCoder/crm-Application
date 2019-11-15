@@ -65,44 +65,44 @@
         <div formArrayName="Package_budget"
           *ngFor="let skill of PackageDetails.get('Package_budget').controls; let i = index">
           <div [formGroupName]="i">
-          
+
             <div class='block-inline'> <label [for]="'packag_type'+i"> packag type </label>
-              <select formControlName="packag_type" [id]="'packag_type'+i" (change)='getpackListName()' autocomplete>
+              <select formControlName="packag_type" [id]="'packag_type'+i" (change)='getPackageType(i)' (change)='getpackListName(i)' autocomplete>
                 <option *ngFor="let item of pTypeId" [ngValue]="item.package_id" >{{item.package_name}}
                 </option>
               </select>
             </div>
 
-            <div *ngIf='packageList.length > 0' class='block-inline'>
+            <div *ngIf='PackageDetails.value.Package_budget[i].packag_type' class='block-inline'>
               <label [for]="'package_list_id'+i"> package list</label>
-              <select formControlName="package_list_id"  autocomplete [id]="'package_list_id'+i" (change)='getPackageDetails(1)'>
-                <option *ngFor="let item of packageList" [ngValue]="item">{{item.packageName}}</option>
+              <select formControlName="package_list_id"  autocomplete [id]="'package_list_id'+i" (change)='getPackageDetails(i)'>
+                <option  *ngFor="let item of packageList"  [ngValue]="item.id">{{item.packageName}}</option>
               </select>
             </div>
 
-            <div class='block-inline' class='block-inline' *ngIf='manulaPayBox'>
+            <div class='block-inline' class='block-inline' *ngIf='PackageDetails.value.Package_budget[i].checktoaddPayemt'>
               <label [for]="'custumCosting'+i"> </label>
               <select>
                 <option value='item' *ngFor="let item of currency"> {{item}} </option>
               </select>
-              <input type='text' formControlName="custumCosting" [id]="'custumCosting'+i" appOnlyNumber="true">
+              <input type='text' (input)='custumCosting($event.value , i)' formControlName="custumCosting" [id]="'custumCosting'+i" appOnlyNumber="true">
             </div>
 
-            <div *ngIf="packageList.length > 0" class='block-inline'>
+            <div *ngIf="PackageDetails.value.Package_budget[i].package_list_id" class='block-inline'>
               <mat-checkbox class="example-margin" formControlName="checktoaddPayemt" [id]="'checktoaddPayemt'+i"
-                [labelPosition]="labelPosition" (change)='paymentManual($event)'>
+                [labelPosition]="labelPosition" (change)='paymentManual($event , i)'>
                 {{texttoaddPayemt}}
               </mat-checkbox>
             </div>
           </div>
 
-
+          <div>
+            <button type='button' (click)="add(i)">add</button>
+          </div>
 
         </div>
 
-        <div>
-          <button (click)="add()">add</button>
-        </div>
+
 
 
       </ng-template>

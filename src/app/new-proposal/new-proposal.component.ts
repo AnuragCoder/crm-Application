@@ -46,9 +46,10 @@ export class NewProposalComponent implements OnInit {
   files: any = [];
   array: any = ['1'];
   PackageDetails: FormGroup;
- 
- 
-
+  PackageArray: any = [0];
+  PacageListArray: any = [0];
+  CheckAutoPayArr: any = [0];
+  customPayArr: any = [0];
 
   constructor(public rest: PropasalService , public fb: FormBuilder , public HttpCustomer: CustomerService) {
 
@@ -66,15 +67,15 @@ export class NewProposalComponent implements OnInit {
       totalPackageFee_cur : [''],
       full_package : [''],
       full_package_cur : [''],
-    
+
     });
-  
-  
-  
+
+
+
   }
 
    ngOnInit() {
-    this.getPackageType();
+    this.getPackageType(0);
     this.getCustomer();
     this.getCurrency();
     }
@@ -90,33 +91,44 @@ export class NewProposalComponent implements OnInit {
   });
 }
 
-add(): void {
+add(i : number): void {
+
+  this.PackageArray.push(0) ;
+  this.PacageListArray.push(0);
+  this.CheckAutoPayArr.push(0);
+  this.customPayArr.push(0);
   console.log(this.PackageDetails.get('Package_budget')['controls']);
   console.log((<FormArray>this.PackageDetails.get('Package_budget')));
   (<FormArray>this.PackageDetails.get('Package_budget')).push(this.addPayment());
 
+
+
+
+
 }
 
-getPackageType() {
+getPackageType(i) {
+
   const token  = localStorage.getItem('currentUser');
   console.log(token);
   this.rest.getPack(token).subscribe(result => {
-    console.log(result);
+    // console.log(result);
     if (result.status === "1") {
 
           this.pTypeId  = result.value;
-          console.log(this.pTypeId);
-          console.log('hello');
+          // console.log(this.pTypeId);
+
         }
   });
 }
 
-getpackListName() {
+getpackListName(i) {
+  this.PackageArray[i] = this.PackageDetails.value.Package_budget[i].packag_type;
+  const value = {packagetypeId : this.PackageDetails.value.Package_budget[i].packag_type};
+
   const token  = localStorage.getItem('currentUser');
-  // const packageList = this.PackageDetails.value['Package_budget'];
-  // console.log(this.PackageDetails);
-  const value = {packagetypeId : this.PackageDetails.value.Package_budget[0].packag_type};
-  console.log(this.PackageDetails.value.Package_budget[0].packag_type);
+  console.log(value);
+  // console.log(this.PackageDetails.value.Package_budget[0].packag_type);
   if (value) {
   this.rest.getpackList( value , token).subscribe(result => {
     console.log(result);
@@ -125,6 +137,56 @@ getpackListName() {
     }
  });
 }
+// console.log(this.PackageArray);
+}
+
+
+
+getPackageDetails(i) {
+   this.PacageListArray[i] = this.PackageDetails.value.Package_budget[i].package_list_id;
+   console.log(this.PacageListArray);
+}
+
+custumCosting(value,i){
+  console.log(value);
+  this.customPayArr[i] = this.PackageDetails.value.Package_budget[i].custumCosting;
+  console.log(this.PackageArray);
+  console.log(this.PacageListArray);
+  console.log(this.CheckAutoPayArr);
+  console.log(this.customPayArr);
+
+}
+
+paymentManual(value , i) {
+console.log(value);
+if (value.checked) {
+  this.manulaPayBox = true;
+  this.CheckAutoPayArr[i] = 1;
+  this.texttoaddPayemt = 'Uncheck to add Auto Payment';
+} else if (!(value.checked)) {
+  this.getPackageDetails(0);
+  this.manulaPayBox = false;
+  this.texttoaddPayemt = 'check to add Payment manually';
+}
+}
+
+
+
+checkboxforFullPackage(value) {
+
+  console.log(value);
+  if (value.checked) {
+    console.log('Checked >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+         this.cbforPaymanually = true;
+         this.checkBoxforADDINGbudgetmanually = 'uncheck to add payment indivisually';
+
+       } else {
+         console.log('Unchecked >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        this.cbforPaymanually = false;
+        this.checkBoxforADDINGbudgetmanually = 'Check to add custom payment for full package';
+
+       }
+
 }
 
 
@@ -217,45 +279,7 @@ getCustomer() {
 
 
 
-getPackageDetails(value) {
-  console.log(value);
-  // const packageList = this.PackageDetails.value['Package_budget'];
-  // console.log(packageList);
-  // this.paymentPackageDetails.push([packageList.id , packageList.packageBudget , value ]);
-  // console.log(this.paymentPackageDetails);
-}
 
-paymentManual(value) {
-console.log(value);
-if (value.checked) {
-  this.manulaPayBox = true;
-  this.getPackageDetails(1);
-  this.texttoaddPayemt = 'Uncheck to add Auto Payment';
-} else if (!(value.checked)) {
-  this.getPackageDetails(0);
-  this.manulaPayBox = false;
-  this.texttoaddPayemt = 'check to add Payment manually';
-}
-}
-
-
-
-checkboxforFullPackage(value) {
-
-  console.log(value);
-  if (value.checked) {
-    console.log('Checked >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-         this.cbforPaymanually = true;
-         this.checkBoxforADDINGbudgetmanually = 'uncheck to add payment indivisually';
-
-       } else {
-         console.log('Unchecked >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-        this.cbforPaymanually = false;
-        this.checkBoxforADDINGbudgetmanually = 'Check to add custom payment for full package';
-
-       }
-
-}
 
 //Package and Paymwnts Ends
 
