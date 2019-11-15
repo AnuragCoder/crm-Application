@@ -7,6 +7,8 @@ import {startWith, map} from 'rxjs/operators';
 import { PropasalService } from '../_service/proposal/propasal.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+
+
 @Component({
   selector: 'app-new-proposal',
   templateUrl: './new-proposal.component.html',
@@ -201,7 +203,7 @@ checkboxforFullPackage(value) {
 // full_package         :  send your full package
 // currency_code       : INR
 // signup_amount      :  2000
-// start_date       :    2019-11-14 09:09:09(send this date as this format exactly)
+// start_date       :    2019-11-14 09:09:09(send this date as this format exactly) Tue Nov 26 2019 00:00:00 GMT+0530 (India Standard Time)
 // end_date     :       2019-11-14 09:09:09(send this date as this format exactly)
 // project_hours      :    12       // if project hrs is send then end date should be blank
 // technology_used     :     PHP
@@ -217,6 +219,9 @@ checkboxforFullPackage(value) {
   } else {
     ProjectendDate = 'noDeadLine';
   }
+
+  const formData = new FormData();
+  let fileData = formData.append('file', this.files);
 
 
   const token  = localStorage.getItem('currentUser');
@@ -235,7 +240,7 @@ checkboxforFullPackage(value) {
     endDate	: ProjectendDate,
     project_hours : this.PackageDetails.get('project_hours').value,
     technology_used : this.PackageDetails.get('technology_used').value,
-    attach_file : this.PackageDetails.get('attach_file').value
+    attach_file : fileData
     };
 
      console.log(data);
@@ -345,9 +350,11 @@ uploadFile(event) {
     const element = event[index];
     this.files.push(element.name)
   }
+  console.log(this.files);
 }
 deleteAttachment(index) {
-  this.files.splice(index, 1)
+  this.files.splice(index, 1);
+  console.log(this.files);
 }
 
 //FileUpload Ends

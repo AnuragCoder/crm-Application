@@ -31,28 +31,21 @@ export class AppComponent  {
 
     nav.events.forEach((event) => {
       if (event instanceof NavigationStart) {
-        this.token = localStorage.getItem('currentUser');
+       // this.token = localStorage.getItem('currentUser');
         if (event['url'] == '/login' || event['url'] ==  '/signup' ) {
           localStorage.removeItem('currentUser');
 
+         } else if(event['url'] == '/'){
+             if(!this.token){
+
+              this.nav.navigate(['/login']);
+             }
          }
       }
     });
   }
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   this.token = localStorage.getItem('currentUser');
-  //   console.log(changes);
 
-  // }
-
-
-  // tokenChek(){
-  //   if(!this.token){
-  //     console.log(this.token);
-  //     this.nav.navigate(['/login']);
-  //      }
-  // }
 
 
 
